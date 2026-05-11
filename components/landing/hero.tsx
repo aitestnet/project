@@ -208,15 +208,15 @@ function HeroPreview({
                 <AvatarFallback>{initials("Yogi Pradana")}</AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm font-semibold leading-tight">
-                  Yogi Pradana
+                <div className="flex items-center gap-2 text-sm font-semibold leading-tight">
+                  <span>Yogi Pradana</span>
                   <Badge
                     variant="outline"
-                    className="ml-2 align-middle text-[10px] font-medium"
+                    className="text-[10px] font-medium"
                   >
                     Verified
                   </Badge>
-                </p>
+                </div>
                 <p className="text-xs text-muted-foreground">
                   AI engineer · 12 products · 2.4k customers
                 </p>
