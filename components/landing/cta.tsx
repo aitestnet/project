@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { ArrowUpRight, AtSign, Check } from "lucide-react";
+import { useMemo, useState } from "react";
+import { ArrowUpRight, AtSign, Check, Loader2, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+
+const taken = new Set(["yogi", "aria", "noor", "lina", "kenji", "ravi", "admin", "root"]);
 
 export function CTA() {
   const [handle, setHandle] = useState("");
@@ -12,7 +14,15 @@ export function CTA() {
     .toLowerCase()
     .replace(/[^a-z0-9-]/g, "")
     .slice(0, 24);
-  const available = cleaned.length >= 3;
+  const tooShort = cleaned.length > 0 && cleaned.length < 3;
+  const isTaken = cleaned.length >= 3 && taken.has(cleaned);
+  const available = cleaned.length >= 3 && !isTaken;
+  const status = useMemo(() => {
+    if (!cleaned) return null;
+    if (tooShort) return { kind: "checking" as const, label: "Keep typing…" };
+    if (isTaken) return { kind: "taken" as const, label: "Already taken" };
+    return { kind: "ok" as const, label: "Available" };
+  }, [cleaned, tooShort, isTaken]);
 
   return (
     <section className="container mt-24 md:mt-32">
@@ -29,44 +39,68 @@ export function CTA() {
           .ai
         </div>
 
-        <div className="relative mx-auto max-w-2xl text-center">
-          <h2 className="font-display text-[32px] font-semibold tracking-[-0.02em] md:text-[48px]">
+        <div className="relative mx-auto max-w-3xl text-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-background/15 bg-background/5 px-3 py-1 text-[11px] font-medium text-background/70">
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 text-emerald-400 pulse-dot" />
+            123 handles claimed in the last hour
+          </span>
+          <h2 className="mt-5 font-display text-[36px] font-semibold leading-[1.02] tracking-[-0.025em] md:text-[60px]">
             <span className="text-shimmer-light">Your AI identity is waiting.</span>
           </h2>
-          <p className="mt-4 text-[15px] text-background/75">
-            Claim your handle, train your AI twin, and start selling live software
-            in minutes.
+          <p className="mt-4 text-[15px] text-background/75 md:text-[16px]">
+            Claim your handle, train your AI twin, and start selling live
+            software in minutes.
           </p>
 
           <form
-            className="mt-8 flex flex-col items-stretch gap-2 sm:flex-row sm:justify-center"
+            className="mx-auto mt-9 flex max-w-2xl flex-col items-stretch gap-2 sm:flex-row"
             onSubmit={(e) => e.preventDefault()}
           >
-            <label className="flex flex-1 items-center rounded-lg bg-background/10 px-3 ring-1 ring-background/15 backdrop-blur transition-shadow focus-within:ring-2 focus-within:ring-background/40 sm:max-w-sm">
+            <label className="flex flex-1 items-center rounded-xl bg-background/10 px-4 ring-1 ring-background/15 backdrop-blur transition-shadow focus-within:ring-2 focus-within:ring-background/40">
               <AtSign className="h-4 w-4 text-background/60" />
               <input
                 value={cleaned}
                 onChange={(e) => setHandle(e.target.value)}
                 placeholder="yourhandle"
-                className="w-full bg-transparent px-2 py-2.5 text-sm text-background placeholder:text-background/50 outline-none"
+                className="w-full bg-transparent px-2.5 py-3.5 text-[16px] text-background placeholder:text-background/50 outline-none"
               />
-              <span className="font-mono text-sm text-background/60">.ai</span>
-              {available && (
-                <Check className="ml-2 h-3.5 w-3.5 text-emerald-400" />
+              <span className="font-mono text-[14px] text-background/60">.ai</span>
+              {status && (
+                <span
+                  className={
+                    "ml-3 inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-1 text-[10px] font-medium " +
+                    (status.kind === "ok"
+                      ? "bg-emerald-400/15 text-emerald-300"
+                      : status.kind === "taken"
+                      ? "bg-red-400/15 text-red-300"
+                      : "bg-background/10 text-background/60")
+                  }
+                >
+                  {status.kind === "ok" && <Check className="h-3 w-3" />}
+                  {status.kind === "taken" && <X className="h-3 w-3" />}
+                  {status.kind === "checking" && (
+                    <Loader2 className="h-3 w-3 animate-spin" />
+                  )}
+                  {status.label}
+                </span>
               )}
             </label>
             <Button
               asChild
               size="lg"
-              className="bg-background text-foreground hover:bg-background/90"
+              disabled={!available}
+              className="h-auto bg-background text-foreground hover:bg-background/90 disabled:opacity-50 sm:px-6"
             >
-              <Link href={`/sign-up${cleaned ? `?u=${cleaned}` : ""}`}>
-                Reserve {cleaned ? `${cleaned}.ai` : "your handle"}
+              <Link
+                href={available ? `/sign-up?u=${cleaned}` : "#"}
+                aria-disabled={!available}
+              >
+                Reserve {available ? `${cleaned}.ai` : "your handle"}
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
             </Button>
           </form>
-          <p className="mt-3 text-xs text-background/50">
+          <p className="mt-3 text-[12px] text-background/50">
             Free forever for hobbyists. No credit card required.
           </p>
 

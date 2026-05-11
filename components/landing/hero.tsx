@@ -3,13 +3,16 @@
 import Link from "next/link";
 import {
   ArrowUpRight,
-  Sparkles,
   ShoppingBag,
   Bot,
   Cpu,
   ChevronRight,
   Check,
-  CornerDownLeft
+  CornerDownLeft,
+  Globe,
+  Zap,
+  CreditCard,
+  Star
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -19,6 +22,19 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { initials } from "@/lib/utils";
+
+const recentClaims = [
+  { handle: "founder.ai", time: "12s" },
+  { handle: "ship.ai", time: "38s" },
+  { handle: "makes.ai", time: "1m" },
+  { handle: "draft.ai", time: "2m" },
+  { handle: "loop.ai", time: "3m" },
+  { handle: "thinks.ai", time: "4m" },
+  { handle: "orbit.ai", time: "6m" },
+  { handle: "voya.ai", time: "7m" },
+  { handle: "andi.ai", time: "9m" },
+  { handle: "echo.ai", time: "11m" }
+];
 
 const previewChat: { from: "ai" | "user"; text: string }[] = [
   { from: "ai", text: "Hey, I'm Yogi's AI twin. What are you building?" },
@@ -51,9 +67,27 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden border-b">
       <div className="pointer-events-none absolute inset-0 grid-bg" />
-      <div className="pointer-events-none absolute inset-0 grid-dots opacity-50" />
+      <div className="pointer-events-none absolute inset-0 grid-lines opacity-60" />
+      <div className="pointer-events-none absolute inset-0 grid-dots opacity-40" />
       <div className="pointer-events-none absolute inset-0 mesh-hero" />
-      <div className="container relative pt-20 pb-24 md:pt-28 md:pb-32 lg:pt-32">
+      <div
+        aria-hidden
+        className="conic-halo opacity-60"
+        style={{ top: "-12%", right: "-8%", height: "560px", width: "560px" }}
+      />
+      <div
+        aria-hidden
+        className="conic-halo opacity-40"
+        style={{
+          bottom: "-16%",
+          left: "-10%",
+          height: "420px",
+          width: "420px",
+          animationDirection: "reverse",
+          animationDuration: "24s"
+        }}
+      />
+      <div className="container relative pt-20 pb-12 md:pt-28 md:pb-16 lg:pt-32">
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-7">
             <motion.div
@@ -77,7 +111,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: STAGGER, ease }}
-              className="mt-6 font-display text-[44px] font-semibold leading-[1.02] tracking-[-0.035em] text-balance text-foreground sm:text-[52px] lg:text-[72px]"
+              className="mt-6 font-display text-[44px] font-semibold leading-[1.02] tracking-[-0.035em] text-balance text-foreground sm:text-[52px] lg:text-[76px]"
             >
               <span className="block">Your{" "}
                 <span className="relative inline-block font-mono text-[0.88em] text-muted-foreground">
@@ -93,7 +127,9 @@ export function Hero() {
                 identity,
               </span>
               <span className="block text-shimmer">storefront, and AI twin</span>
-              <span className="block">in one place.</span>
+              <span className="block">
+                in <span className="font-display italic text-muted-foreground">one</span> place.
+              </span>
             </motion.h1>
 
             <motion.p
@@ -138,33 +174,46 @@ export function Hero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: STAGGER * 4, ease }}
-              className="mt-9 flex items-center gap-3"
+              className="mt-9 flex flex-wrap items-center gap-x-5 gap-y-3"
             >
-              <div className="flex -space-x-2">
-                {[
-                  { name: "Yogi", color: "bg-tint-indigo" },
-                  { name: "Aria", color: "bg-tint-violet" },
-                  { name: "Kenji", color: "bg-tint-amber" },
-                  { name: "Noor", color: "bg-tint-emerald" },
-                  { name: "Lina", color: "bg-secondary" }
-                ].map((p) => (
-                  <Avatar
-                    key={p.name}
-                    className={`h-7 w-7 ring-2 ring-background ${p.color}`}
-                  >
-                    <AvatarImage
-                      src={`https://api.dicebear.com/9.x/notionists/svg?seed=${p.name}&backgroundColor=transparent`}
-                    />
-                    <AvatarFallback className="text-[10px]">
-                      {initials(p.name)}
-                    </AvatarFallback>
-                  </Avatar>
-                ))}
+              <div className="flex items-center gap-3">
+                <div className="flex -space-x-2">
+                  {[
+                    { name: "Yogi", color: "bg-tint-indigo" },
+                    { name: "Aria", color: "bg-tint-violet" },
+                    { name: "Kenji", color: "bg-tint-amber" },
+                    { name: "Noor", color: "bg-tint-emerald" },
+                    { name: "Lina", color: "bg-secondary" }
+                  ].map((p) => (
+                    <Avatar
+                      key={p.name}
+                      className={`h-7 w-7 ring-2 ring-background ${p.color}`}
+                    >
+                      <AvatarImage
+                        src={`https://api.dicebear.com/9.x/notionists/svg?seed=${p.name}&backgroundColor=transparent`}
+                      />
+                      <AvatarFallback className="text-[10px]">
+                        {initials(p.name)}
+                      </AvatarFallback>
+                    </Avatar>
+                  ))}
+                </div>
+                <p className="text-[12px] text-muted-foreground">
+                  <span className="font-medium text-foreground">1,200+ creators</span>{" "}
+                  on the waitlist
+                </p>
               </div>
-              <p className="text-[12px] text-muted-foreground">
-                <span className="font-medium text-foreground">1,200+ creators</span>{" "}
-                on the waitlist
-              </p>
+              <span className="hidden h-4 w-px bg-border sm:inline-block" />
+              <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-0.5 text-amber-500">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-3 w-3 fill-current" />
+                  ))}
+                </div>
+                <span className="text-[12px] text-muted-foreground">
+                  <span className="font-medium text-foreground">4.9</span> on Product Hunt
+                </span>
+              </div>
             </motion.div>
 
             <motion.ul
@@ -198,7 +247,37 @@ export function Hero() {
           </div>
         </div>
       </div>
+      <LiveTicker />
     </section>
+  );
+}
+
+function LiveTicker() {
+  return (
+    <div className="relative border-t bg-background/80 backdrop-blur">
+      <div className="container relative">
+        <div className="flex items-center gap-3 py-2.5">
+          <span className="flex shrink-0 items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500 text-emerald-500 pulse-dot" />
+            Live
+          </span>
+          <span className="hidden h-3 w-px bg-border sm:inline-block" />
+          <div className="relative flex-1 overflow-hidden scroll-x-fade pause-on-hover">
+            <div className="ticker flex w-max items-center gap-7 whitespace-nowrap text-[12px] text-muted-foreground">
+              {[...recentClaims, ...recentClaims].map((c, i) => (
+                <span key={i} className="flex items-center gap-1.5">
+                  <span className="font-mono text-foreground">{c.handle}</span>
+                  <span className="text-[11px] text-muted-foreground/70">
+                    claimed {c.time} ago
+                  </span>
+                  <span className="inline-block h-1 w-1 rounded-full bg-border" />
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -210,11 +289,58 @@ function HeroPreview({
   return (
     <div className="relative">
       <div className="absolute -inset-8 -z-10 rounded-[2rem] mesh-soft blur-2xl" />
+
+      <motion.div
+        initial={{ opacity: 0, x: -16, rotate: -3 }}
+        animate={{ opacity: 1, x: 0, rotate: -3 }}
+        transition={{ duration: 0.8, delay: 0.45, ease }}
+        className="absolute -left-10 top-8 z-20 hidden w-[170px] rounded-2xl border bg-card p-3 shadow-elev ring-tint-amber lg:block"
+      >
+        <div className="flex items-center gap-1.5 text-[10px] font-medium text-muted-foreground">
+          <CreditCard className="h-3 w-3 text-amber-500" />
+          New sale
+          <span className="ml-auto rounded-full bg-tint-emerald px-1.5 py-0.5 text-[9px] font-semibold text-emerald-600">
+            +$29
+          </span>
+        </div>
+        <div className="mt-1.5 text-[11px] font-semibold text-foreground">
+          AI SEO Tool
+        </div>
+        <div className="text-[10px] text-muted-foreground">via Stripe · 2s ago</div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, x: 16, rotate: 4 }}
+        animate={{ opacity: 1, x: 0, rotate: 4 }}
+        transition={{ duration: 0.8, delay: 0.55, ease }}
+        className="absolute -right-6 -bottom-6 z-20 hidden w-[200px] rounded-2xl border bg-card p-3 shadow-elev ring-tint-indigo lg:block"
+      >
+        <div className="flex items-center gap-1.5 text-[10px] font-medium text-muted-foreground">
+          <Zap className="h-3 w-3 text-indigo-500" />
+          Dokploy deploy
+          <span className="ml-auto inline-flex items-center gap-1 rounded-full bg-tint-emerald px-1.5 py-0.5 text-[9px] font-semibold text-emerald-600">
+            <span className="h-1 w-1 rounded-full bg-emerald-500" />
+            live
+          </span>
+        </div>
+        <div className="mt-1.5 font-mono text-[11px] text-foreground">
+          seo.yogi.ai
+        </div>
+        <div className="mt-1 flex items-center gap-1.5 text-[10px] text-muted-foreground">
+          <span>shipped in</span>
+          <span className="font-semibold text-foreground">28s</span>
+          <span className="ml-auto inline-flex items-center gap-0.5 text-emerald-600">
+            <Globe className="h-2.5 w-2.5" />
+            sin1
+          </span>
+        </div>
+      </motion.div>
+
       <motion.div
         initial={{ rotate: -1 }}
         animate={{ rotate: 0 }}
         transition={{ duration: 1.2, ease }}
-        className="relative rounded-2xl border bg-card shadow-card ring-1 ring-foreground/5"
+        className="relative z-10 rounded-2xl border bg-card shadow-card ring-1 ring-foreground/5"
       >
         <div className="rounded-2xl">
           <div className="flex items-center justify-between border-b px-4 py-3">
