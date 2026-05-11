@@ -16,15 +16,15 @@ const live = [
 export function RuntimeShowcase() {
   return (
     <section className="container mt-24 md:mt-32">
-      <div className="grid items-center gap-10 rounded-3xl border bg-gradient-to-br from-violet-50 via-white to-fuchsia-50/40 p-6 md:grid-cols-12 md:p-10 lg:p-14">
+      <div className="grid items-center gap-10 rounded-3xl border bg-card p-6 md:grid-cols-12 md:p-10 lg:p-14">
         <div className="md:col-span-6">
-          <Badge variant="soft" className="rounded-full">
+          <Badge variant="outline" className="rounded-full text-[11px] font-medium">
             <Cpu className="mr-1 h-3 w-3" /> Executable Product Runtime
           </Badge>
-          <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight md:text-4xl">
+          <h2 className="mt-4 font-display text-[32px] font-semibold tracking-[-0.02em] md:text-[40px]">
             Sell <span className="text-gradient">live software</span>, not dead PDFs.
           </h2>
-          <p className="mt-4 max-w-md text-muted-foreground">
+          <p className="mt-4 max-w-md text-[15px] text-muted-foreground">
             Every product on Teskel can be a real, runnable app. We containerize,
             deploy, and SSL-secure it for you on its own subdomain — powered by
             Dokploy.
@@ -37,15 +37,15 @@ export function RuntimeShowcase() {
               { icon: Zap, t: "Edge cache + Redis queue out of the box" }
             ].map((i) => (
               <li key={i.t} className="flex items-start gap-3">
-                <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-md bg-white shadow-sm ring-1 ring-violet-200">
-                  <i.icon className="h-3.5 w-3.5 text-violet-600" />
+                <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-md border bg-background">
+                  <i.icon className="h-3.5 w-3.5 text-foreground" />
                 </span>
                 {i.t}
               </li>
             ))}
           </ul>
           <div className="mt-7 flex gap-2">
-            <Button asChild variant="gradient">
+            <Button asChild>
               <Link href="/dashboard">Open the dashboard</Link>
             </Button>
             <Button asChild variant="outline">
@@ -55,16 +55,19 @@ export function RuntimeShowcase() {
         </div>
 
         <div className="md:col-span-6">
-          <div className="rounded-2xl border bg-card p-3 shadow-xl shadow-violet-500/5">
-            <div className="rounded-xl border bg-background">
+          <div className="rounded-2xl border bg-background shadow-card">
+            <div className="rounded-2xl">
               <div className="flex items-center justify-between border-b px-4 py-2.5 text-xs">
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <span className="inline-flex h-2 w-2 rounded-full bg-rose-400" />
-                  <span className="inline-flex h-2 w-2 rounded-full bg-amber-400" />
-                  <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-                  <span className="ml-2 font-mono">teskel — runtime</span>
+                <div className="flex items-center gap-1.5 text-muted-foreground">
+                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200" />
+                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200" />
+                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200" />
+                  <span className="ml-2 font-mono text-[11px]">
+                    teskel — runtime
+                  </span>
                 </div>
-                <Badge variant="success" className="rounded-full">
+                <Badge variant="outline" className="rounded-full text-[10px]">
+                  <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
                   3 live
                 </Badge>
               </div>
@@ -79,7 +82,7 @@ export function RuntimeShowcase() {
                     className="flex items-center justify-between p-4"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-violet-100 to-fuchsia-100 text-violet-700">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg border bg-secondary text-foreground">
                         <Cpu className="h-4 w-4" />
                       </div>
                       <div>
@@ -91,7 +94,9 @@ export function RuntimeShowcase() {
                     </div>
                     <div className="flex items-center gap-3">
                       <div className="hidden text-right sm:block">
-                        <p className="text-xs text-muted-foreground">{l.kind}</p>
+                        <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                          {l.kind}
+                        </p>
                         <p className="text-sm font-semibold">${l.price}</p>
                       </div>
                       <Button
@@ -105,7 +110,7 @@ export function RuntimeShowcase() {
                   </motion.div>
                 ))}
               </div>
-              <div className="border-t bg-secondary/40 px-4 py-3 text-xs text-muted-foreground">
+              <div className="border-t bg-secondary/60 px-4 py-3 text-xs text-muted-foreground">
                 Deploy from GitHub → auto SSL → subdomain → revenue. ~38s avg.
               </div>
             </div>

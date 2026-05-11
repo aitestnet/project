@@ -4,7 +4,7 @@ export const creators: Record<string, Creator> = {
   yogi: {
     username: "yogi",
     name: "Yogi Pradana",
-    avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=Yogi&backgroundColor=ede9fe",
+    avatar: "https://api.dicebear.com/9.x/notionists/svg?seed=Yogi&backgroundColor=f5f5f5",
     cover: "https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=1600&q=70&auto=format&fit=crop",
     tagline: "AI engineer building executable digital products",
     bio: "I help founders ship AI-native businesses. Selling prompt packs, mini SaaS, and 1:1 mentoring.",
@@ -259,7 +259,7 @@ export const discoverCreators: DiscoverCreator[] = [
     followers: 18234,
     verified: true,
     topProduct: "AI SEO Tool",
-    color: "from-violet-500/15 to-fuchsia-500/10"
+    color: "from-neutral-200/40 to-neutral-100/40"
   },
   {
     username: "aria",
@@ -270,7 +270,7 @@ export const discoverCreators: DiscoverCreator[] = [
     followers: 42870,
     verified: true,
     topProduct: "Brand Kit Essentials",
-    color: "from-pink-500/15 to-orange-400/10"
+    color: "from-neutral-200/40 to-neutral-100/40"
   },
   {
     username: "ravi",

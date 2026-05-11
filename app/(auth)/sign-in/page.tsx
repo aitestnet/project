@@ -51,7 +51,7 @@ export default function SignInPage() {
           </div>
           <Input id="password" type="password" placeholder="••••••••" />
         </div>
-        <Button type="submit" variant="gradient" size="lg" className="w-full">
+        <Button type="submit" size="lg" className="w-full">
           Sign in
           <ArrowRight className="h-4 w-4" />
         </Button>
@@ -59,7 +59,7 @@ export default function SignInPage() {
 
       <p className="mt-6 text-sm">
         New to Teskel?{" "}
-        <Link href="/sign-up" className="font-medium text-violet-700 hover:underline">
+        <Link href="/sign-up" className="font-medium text-foreground hover:underline">
           Claim your handle
         </Link>
       </p>

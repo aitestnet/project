@@ -10,21 +10,19 @@ const items = [
 
 export function Stats() {
   return (
-    <section className="container mt-16 md:mt-24">
-      <div className="rounded-2xl border bg-card/60 px-6 py-8 backdrop-blur">
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-          {items.map((s) => (
-            <div key={s.label} className="text-center">
-              <p className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
-                {s.value}
-                <span className="text-violet-600">{s.suffix}</span>
-              </p>
-              <p className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
-                {s.label}
-              </p>
-            </div>
-          ))}
-        </div>
+    <section className="container mt-20 md:mt-28">
+      <div className="grid grid-cols-2 divide-x divide-y divide-border overflow-hidden rounded-2xl border bg-card md:grid-cols-4 md:divide-y-0">
+        {items.map((s) => (
+          <div key={s.label} className="p-6 md:p-8">
+            <p className="font-display text-3xl font-semibold tracking-tight md:text-4xl">
+              {s.value}
+              <span className="text-muted-foreground">{s.suffix}</span>
+            </p>
+            <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+              {s.label}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   );

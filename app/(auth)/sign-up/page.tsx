@@ -76,7 +76,6 @@ export default function SignUpPage() {
         </div>
         <Button
           type="submit"
-          variant="gradient"
           size="lg"
           className="w-full"
           disabled={!available}
@@ -91,7 +90,7 @@ export default function SignUpPage() {
       </p>
       <p className="mt-4 text-sm">
         Already on Teskel?{" "}
-        <Link href="/sign-in" className="font-medium text-violet-700 hover:underline">
+        <Link href="/sign-in" className="font-medium text-foreground hover:underline">
           Sign in
         </Link>
       </p>

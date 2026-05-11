@@ -28,7 +28,7 @@ export default function ProductsPage() {
               <Filter className="h-3.5 w-3.5" />
               Filters
             </Button>
-            <Button variant="gradient">
+            <Button>
               <Plus className="h-3.5 w-3.5" />
               New product
             </Button>
@@ -42,7 +42,7 @@ export default function ProductsPage() {
           placeholder="Search products…"
           className="flex-1 bg-transparent px-2 py-1 text-sm outline-none placeholder:text-muted-foreground"
         />
-        <Badge variant="soft">{dashboardProducts.length} items</Badge>
+        <Badge variant="outline">{dashboardProducts.length} items</Badge>
       </div>
 
       <div className="overflow-hidden rounded-2xl border bg-card">
@@ -60,7 +60,7 @@ export default function ProductsPage() {
               className="grid grid-cols-12 items-center gap-2 px-4 py-3 transition-colors hover:bg-secondary/40"
             >
               <div className="col-span-5 flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-violet-100 to-fuchsia-100 text-lg">
+                <span className="flex h-10 w-10 items-center justify-center rounded-lg border bg-secondary text-lg">
                   {p.emoji}
                 </span>
                 <div className="min-w-0">
@@ -72,7 +72,7 @@ export default function ProductsPage() {
               </div>
               <div className="col-span-2 text-sm">
                 {p.runtime === "executable" ? (
-                  <Badge variant="soft">
+                  <Badge variant="outline">
                     <Cpu className="mr-1 h-3 w-3" />
                     Mini SaaS
                   </Badge>
@@ -88,7 +88,10 @@ export default function ProductsPage() {
               </div>
               <div className="col-span-1 flex items-center justify-end gap-1">
                 {statusFor(i) === "Live" ? (
-                  <Badge variant="success">Live</Badge>
+                  <Badge variant="outline">
+                    <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                    Live
+                  </Badge>
                 ) : (
                   <Badge variant="outline">Draft</Badge>
                 )}
@@ -101,7 +104,7 @@ export default function ProductsPage() {
         </div>
       </div>
 
-      <div className="rounded-2xl border bg-gradient-to-br from-violet-50 to-fuchsia-50 p-5">
+      <div className="rounded-2xl border bg-card p-5">
         <div className="flex flex-col items-start justify-between gap-3 md:flex-row md:items-center">
           <div>
             <p className="font-semibold">Ship a live mini SaaS</p>
@@ -110,7 +113,7 @@ export default function ProductsPage() {
               Dokploy.
             </p>
           </div>
-          <Button variant="gradient">
+          <Button>
             Connect GitHub
             <ArrowUpRight className="h-3.5 w-3.5" />
           </Button>

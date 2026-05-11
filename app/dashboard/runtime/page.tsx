@@ -60,7 +60,7 @@ export default function RuntimePage() {
               <RefreshCw className="h-3.5 w-3.5" />
               Sync from GitHub
             </Button>
-            <Button variant="gradient">
+            <Button>
               <Plus className="h-3.5 w-3.5" />
               Deploy new app
             </Button>
@@ -90,7 +90,7 @@ export default function RuntimePage() {
               className="grid grid-cols-12 items-center gap-2 px-4 py-3 hover:bg-secondary/40"
             >
               <div className="col-span-4 flex items-center gap-3">
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-violet-100 to-fuchsia-100 text-violet-700">
+                <span className="flex h-9 w-9 items-center justify-center rounded-lg border bg-secondary text-foreground">
                   <Server className="h-4 w-4" />
                 </span>
                 <div>
@@ -115,9 +115,15 @@ export default function RuntimePage() {
               </div>
               <div className="col-span-2 flex items-center justify-end gap-2">
                 {r.status === "Healthy" ? (
-                  <Badge variant="success">{r.status}</Badge>
+                  <Badge variant="outline">
+                    <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                    {r.status}
+                  </Badge>
                 ) : (
-                  <Badge variant="warning">{r.status}</Badge>
+                  <Badge variant="outline">
+                    <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-amber-500" />
+                    {r.status}
+                  </Badge>
                 )}
                 <Button size="icon" variant="ghost" className="h-7 w-7">
                   <ArrowUpRight className="h-3.5 w-3.5" />
@@ -130,7 +136,7 @@ export default function RuntimePage() {
 
       <div className="rounded-2xl border bg-card p-6">
         <div className="flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-100 text-violet-700">
+          <span className="flex h-9 w-9 items-center justify-center rounded-lg border bg-secondary text-foreground">
             <Github className="h-4 w-4" />
           </span>
           <div>
@@ -152,10 +158,13 @@ export default function RuntimePage() {
               className="flex items-center justify-between rounded-xl border bg-background p-3"
             >
               <div className="flex items-center gap-2 text-sm">
-                <i.icon className="h-4 w-4 text-violet-600" />
+                <i.icon className="h-4 w-4 text-foreground" />
                 {i.label}
               </div>
-              <Badge variant="success">On</Badge>
+              <Badge variant="outline">
+                <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                On
+              </Badge>
             </div>
           ))}
         </div>
@@ -176,12 +185,14 @@ function Stat({
   return (
     <div className="rounded-2xl border bg-card p-5">
       <div className="flex items-center justify-between">
-        <p className="text-xs uppercase tracking-wider text-muted-foreground">
+        <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
           {label}
         </p>
-        <Icon className="h-4 w-4 text-violet-600" />
+        <Icon className="h-4 w-4 text-foreground" />
       </div>
-      <p className="mt-3 font-display text-2xl font-semibold">{value}</p>
+      <p className="mt-3 font-display text-2xl font-semibold tracking-[-0.02em]">
+        {value}
+      </p>
     </div>
   );
 }

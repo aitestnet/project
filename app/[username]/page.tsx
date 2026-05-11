@@ -46,7 +46,7 @@ export default function IdentityPage({ params }: Params) {
               <TabsList className="grid w-full grid-cols-3 md:w-auto md:inline-grid">
                 <TabsTrigger value="products">
                   Products
-                  <span className="ml-1.5 rounded-full bg-violet-100 px-1.5 py-0 text-[10px] font-medium text-violet-700">
+                  <span className="ml-1.5 rounded-full bg-secondary px-1.5 py-0 text-[10px] font-medium text-foreground">
                     {items.length}
                   </span>
                 </TabsTrigger>

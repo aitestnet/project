@@ -66,7 +66,7 @@ export default function DashboardPage() {
                 Preview
               </Link>
             </Button>
-            <Button variant="gradient">
+            <Button>
               <Plus className="h-3.5 w-3.5" />
               New product
             </Button>
@@ -105,17 +105,17 @@ export default function DashboardPage() {
         <div className="rounded-2xl border bg-card p-5 lg:col-span-8">
           <div className="flex items-start justify-between">
             <div>
-              <p className="text-xs uppercase tracking-wider text-muted-foreground">
+              <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
                 Revenue
               </p>
-              <p className="mt-1 font-display text-2xl font-semibold">
+              <p className="mt-1 font-display text-2xl font-semibold tracking-[-0.02em]">
                 {formatCurrency(184320)}
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
                 Lifetime · $5.8M+ flowing through Teskel creators
               </p>
             </div>
-            <Badge variant="success" className="rounded-full">
+            <Badge variant="outline" className="rounded-full">
               <Activity className="mr-1 h-3 w-3" />
               On track
             </Badge>
@@ -139,10 +139,10 @@ export default function DashboardPage() {
 
         <div className="space-y-3 rounded-2xl border bg-card p-5 lg:col-span-4">
           <div className="flex items-center justify-between">
-            <p className="text-xs uppercase tracking-wider text-muted-foreground">
+            <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
               AI persona health
             </p>
-            <Bot className="h-4 w-4 text-violet-600" />
+            <Bot className="h-4 w-4 text-foreground" />
           </div>
           <div>
             <div className="flex items-center justify-between text-sm">
@@ -195,7 +195,7 @@ export default function DashboardPage() {
                 className="flex items-center justify-between py-3"
               >
                 <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-violet-100 to-fuchsia-100 text-lg">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-lg border bg-secondary text-lg">
                     {p.emoji}
                   </span>
                   <div className="min-w-0">
@@ -227,14 +227,14 @@ export default function DashboardPage() {
                 Your AI twin handled these without you.
               </p>
             </div>
-            <Badge variant="soft">87 this week</Badge>
+            <Badge variant="outline">87 this week</Badge>
           </div>
           <ul className="mt-4 space-y-3">
             {recentChats.map((c) => (
               <li key={c.name} className="flex items-start gap-3">
                 <Avatar className="h-8 w-8">
                   <AvatarImage
-                    src={`https://api.dicebear.com/9.x/notionists/svg?seed=${c.seed}&backgroundColor=ede9fe`}
+                    src={`https://api.dicebear.com/9.x/notionists/svg?seed=${c.seed}&backgroundColor=f5f5f5`}
                   />
                   <AvatarFallback>{initials(c.name)}</AvatarFallback>
                 </Avatar>

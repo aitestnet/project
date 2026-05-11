@@ -11,7 +11,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-secondary/40">
+    <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
         <div className="flex h-14 items-center justify-between px-4 md:px-6">
           <div className="flex items-center gap-4">
@@ -28,7 +28,7 @@ export default function DashboardLayout({
               View public page →
             </Link>
             <Avatar className="h-8 w-8">
-              <AvatarImage src="https://api.dicebear.com/9.x/notionists/svg?seed=Yogi&backgroundColor=ede9fe" />
+              <AvatarImage src="https://api.dicebear.com/9.x/notionists/svg?seed=Yogi&backgroundColor=f5f5f5" />
               <AvatarFallback>YP</AvatarFallback>
             </Avatar>
           </div>

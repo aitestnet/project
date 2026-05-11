@@ -29,6 +29,9 @@ export function DashboardSidebar() {
   const pathname = usePathname();
   return (
     <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-60 shrink-0 border-r bg-background px-3 py-5 md:block">
+      <p className="px-3 pb-2 text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+        Workspace
+      </p>
       <nav className="space-y-0.5">
         {links.map((l) => {
           const Icon = l.icon;
@@ -40,9 +43,9 @@ export function DashboardSidebar() {
               key={l.href}
               href={l.href}
               className={cn(
-                "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition-colors",
+                "flex items-center gap-2.5 rounded-lg px-3 py-1.5 text-sm transition-colors",
                 active
-                  ? "bg-violet-100 text-violet-700"
+                  ? "bg-secondary text-foreground"
                   : "text-muted-foreground hover:bg-accent hover:text-foreground"
               )}
             >
@@ -52,8 +55,8 @@ export function DashboardSidebar() {
           );
         })}
       </nav>
-      <div className="mt-6 rounded-xl border bg-gradient-to-br from-violet-50 to-fuchsia-50 p-4">
-        <div className="flex items-center gap-1.5 text-xs font-semibold text-violet-700">
+      <div className="mt-6 rounded-xl border bg-card p-4">
+        <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
           <Sparkles className="h-3.5 w-3.5" />
           Upgrade to Studio
         </div>
@@ -62,7 +65,7 @@ export function DashboardSidebar() {
         </p>
         <Link
           href="/#pricing"
-          className="mt-3 inline-flex text-xs font-medium text-violet-700 hover:underline"
+          className="mt-3 inline-flex text-xs font-medium text-foreground hover:underline"
         >
           See plans →
         </Link>

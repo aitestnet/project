@@ -18,12 +18,12 @@ export function StatCard({
   return (
     <div className="rounded-2xl border bg-card p-5">
       <div className="flex items-center justify-between">
-        <p className="text-xs uppercase tracking-wider text-muted-foreground">
+        <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
           {label}
         </p>
-        {Icon && <Icon className="h-4 w-4 text-violet-600" />}
+        {Icon && <Icon className="h-4 w-4 text-foreground" />}
       </div>
-      <p className="mt-3 font-display text-2xl font-semibold tracking-tight">
+      <p className="mt-3 font-display text-2xl font-semibold tracking-[-0.02em]">
         {value}
       </p>
       {delta && (

@@ -80,7 +80,7 @@ export function Footer() {
         <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t pt-6 text-xs text-muted-foreground md:flex-row md:items-center">
           <p>© {new Date().getFullYear()} Teskel Labs, Inc. Built with care.</p>
           <p className="font-mono">
-            you<span className="text-violet-600">.ai</span> · AI Identity Commerce
+            you<span className="text-foreground">.ai</span> · AI Identity Commerce
           </p>
         </div>
       </div>
