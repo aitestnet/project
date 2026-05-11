@@ -8,9 +8,12 @@ import {
   Bot,
   Cpu,
   ChevronRight,
-  Check
+  Check,
+  CornerDownLeft
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -26,7 +29,25 @@ const previewChat: { from: "ai" | "user"; text: string }[] = [
   }
 ];
 
+const STAGGER = 0.06;
+const ease = [0.22, 1, 0.36, 1] as const;
+
 export function Hero() {
+  const router = useRouter();
+
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement | null;
+      if (t?.closest("input, textarea, [contenteditable='true']")) return;
+      if (e.key.toLowerCase() === "g") {
+        e.preventDefault();
+        router.push("/yogi");
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [router]);
+
   return (
     <section className="relative overflow-hidden border-b">
       <div className="pointer-events-none absolute inset-0 grid-bg" />
@@ -37,62 +58,85 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.5, ease }}
             >
               <Badge
                 variant="outline"
-                className="rounded-full bg-background px-3 py-1 text-[11px] font-medium text-muted-foreground"
+                className="group rounded-full bg-background px-3 py-1 text-[11px] font-medium text-muted-foreground"
               >
-                <Sparkles className="mr-1.5 h-3 w-3" />
-                Now in private beta · v0.1
+                <span className="relative mr-1.5 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500 text-emerald-500 pulse-dot" />
+                Now in private beta
+                <span className="mx-2 inline-block h-3 w-px bg-border" />
+                v0.1 changelog
+                <ArrowUpRight className="ml-1 h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Badge>
             </motion.div>
+
             <motion.h1
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.05 }}
-              className="mt-6 font-display text-[42px] font-semibold leading-[1.04] tracking-[-0.03em] text-balance text-foreground sm:text-5xl lg:text-[64px]"
+              transition={{ duration: 0.65, delay: STAGGER, ease }}
+              className="mt-6 font-display text-[44px] font-semibold leading-[1.02] tracking-[-0.035em] text-balance text-foreground sm:text-[52px] lg:text-[72px]"
             >
-              Your <span className="font-mono text-[0.88em] text-muted-foreground">.ai</span>{" "}
-              identity,
-              <br className="hidden sm:inline" /> storefront, and AI twin in one place.
+              <span className="block">Your{" "}
+                <span className="relative inline-block font-mono text-[0.88em] text-muted-foreground">
+                  .ai
+                  <motion.span
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.7, delay: 0.55, ease }}
+                    style={{ transformOrigin: "left" }}
+                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-foreground"
+                  />
+                </span>{" "}
+                identity,
+              </span>
+              <span className="block text-shimmer">storefront, and AI twin</span>
+              <span className="block">in one place.</span>
             </motion.h1>
+
             <motion.p
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="mt-6 max-w-2xl text-[15px] leading-relaxed text-muted-foreground sm:text-base"
+              transition={{ duration: 0.6, delay: STAGGER * 2, ease }}
+              className="mt-6 max-w-2xl text-[15px] leading-relaxed text-pretty text-muted-foreground sm:text-base"
             >
               Teskel is the AI-native creator commerce layer. Claim{" "}
-              <span className="font-mono text-foreground">username.ai</span>, train an
-              AI persona of yourself, and sell real, executable software — not just
-              PDFs.
+              <span className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[0.92em] text-foreground">
+                username.ai
+              </span>
+              , train an AI persona of yourself, and sell real, executable software
+              — not just PDFs.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="mt-8 flex flex-col gap-2 sm:flex-row"
+              transition={{ duration: 0.6, delay: STAGGER * 3, ease }}
+              className="mt-8 flex flex-col gap-2 sm:flex-row sm:items-center"
             >
-              <Button asChild size="lg">
+              <Button asChild size="lg" className="group">
                 <Link href="/sign-up">
                   Claim your .ai handle
-                  <ArrowUpRight className="h-4 w-4" />
+                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
+              <Button asChild size="lg" variant="outline" className="group">
                 <Link href="/yogi">
                   See a live demo
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </Link>
               </Button>
+              <span className="hidden items-center gap-1.5 text-[11px] text-muted-foreground sm:inline-flex">
+                <span className="kbd">G</span>
+                <span>jump to demo</span>
+              </span>
             </motion.div>
 
             <motion.ul
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
+              transition={{ duration: 0.6, delay: STAGGER * 5, ease }}
               className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-muted-foreground"
             >
               {[
@@ -106,28 +150,13 @@ export function Hero() {
                 </li>
               ))}
             </motion.ul>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.35 }}
-              className="mt-12 flex flex-wrap items-center gap-6 text-[11px] uppercase tracking-[0.14em] text-muted-foreground"
-            >
-              <span>Trusted by</span>
-              <div className="flex items-center gap-6 font-mono text-foreground/60">
-                <span>aria.ai</span>
-                <span>yogi.ai</span>
-                <span>lumen.studio</span>
-                <span>kenji.ai</span>
-              </div>
-            </motion.div>
           </div>
 
           <div className="lg:col-span-5">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
+              transition={{ duration: 0.75, delay: 0.1, ease }}
               className="relative"
             >
               <HeroPreview previewChat={previewChat} />
@@ -147,20 +176,27 @@ function HeroPreview({
   return (
     <div className="relative">
       <div className="absolute -inset-8 -z-10 rounded-[2rem] bg-gradient-to-b from-foreground/[0.04] to-transparent blur-2xl" />
-      <div className="relative rounded-2xl border bg-card shadow-card">
+      <motion.div
+        initial={{ rotate: -1 }}
+        animate={{ rotate: 0 }}
+        transition={{ duration: 1.2, ease }}
+        className="relative rounded-2xl border bg-card shadow-card"
+      >
         <div className="rounded-2xl">
           <div className="flex items-center justify-between border-b px-4 py-3">
             <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200" />
               <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200" />
               <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200" />
-              <span className="ml-3 font-mono text-[11px] text-foreground">yogi.ai</span>
+              <span className="ml-3 font-mono text-[11px] text-foreground">
+                yogi.ai
+              </span>
             </div>
             <Badge
               variant="outline"
               className="rounded-full text-[10px] font-medium"
             >
-              <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500 text-emerald-500 pulse-dot" />
               Live
             </Badge>
           </div>
@@ -195,7 +231,7 @@ function HeroPreview({
               ].map((s) => (
                 <div
                   key={s.label}
-                  className="rounded-lg border bg-background px-2 py-2.5"
+                  className="group rounded-lg border bg-background px-2 py-2.5 transition-all hover:-translate-y-0.5 hover:border-foreground/40"
                 >
                   <s.icon className="mx-auto h-3.5 w-3.5 text-foreground" />
                   <p className="mt-1 text-[11px] font-medium">{s.label}</p>
@@ -209,7 +245,7 @@ function HeroPreview({
                   key={i}
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.5 + i * 0.25 }}
+                  transition={{ duration: 0.4, delay: 0.5 + i * 0.25, ease }}
                   className={
                     m.from === "ai"
                       ? "flex max-w-[88%] gap-2"
@@ -232,6 +268,16 @@ function HeroPreview({
                   </div>
                 </motion.div>
               ))}
+              <motion.div
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 1.4, ease }}
+                className="flex max-w-[88%] items-center gap-1.5 pl-8"
+              >
+                <span className="inline-block h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:-0.3s]" />
+                <span className="inline-block h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:-0.15s]" />
+                <span className="inline-block h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60" />
+              </motion.div>
             </div>
 
             <div className="mt-5 flex items-center gap-2 rounded-xl border bg-background p-1.5 pl-3">
@@ -240,13 +286,16 @@ function HeroPreview({
                 value="Ask Yogi's AI twin…"
                 className="flex-1 bg-transparent text-xs text-muted-foreground outline-none"
               />
+              <span className="kbd">
+                <CornerDownLeft className="h-2.5 w-2.5" />
+              </span>
               <Button size="sm" className="h-7 px-3 text-xs">
                 Send
               </Button>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

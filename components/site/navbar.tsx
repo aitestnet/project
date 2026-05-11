@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, ArrowUpRight } from "lucide-react";
+import { Menu, ArrowUpRight, Search } from "lucide-react";
 import * as React from "react";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/site/logo";
@@ -18,6 +19,7 @@ const links = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
 
@@ -28,16 +30,32 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        router.push("/discover");
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [router]);
+
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 w-full border-b transition-colors",
+        "sticky top-0 z-40 w-full transition-all",
         scrolled
-          ? "border-border/80 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/70"
-          : "border-transparent bg-background"
+          ? "border-b border-border/80 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/70 shadow-soft"
+          : "border-b border-transparent bg-background"
       )}
     >
-      <div className="container flex h-14 items-center justify-between gap-4">
+      <div
+        className={cn(
+          "container flex items-center justify-between gap-4 transition-all",
+          scrolled ? "h-12" : "h-14"
+        )}
+      >
         <div className="flex items-center gap-8">
           <Logo />
           <nav className="hidden items-center gap-6 md:flex">
@@ -55,14 +73,26 @@ export function Navbar() {
             ))}
           </nav>
         </div>
-        <div className="hidden items-center gap-1 md:flex">
+        <div className="hidden items-center gap-2 md:flex">
+          <button
+            onClick={() => router.push("/discover")}
+            className="inline-flex h-8 items-center gap-2 rounded-md border bg-card px-2.5 text-[12px] text-muted-foreground transition-colors hover:text-foreground"
+            aria-label="Open discover"
+          >
+            <Search className="h-3.5 w-3.5" />
+            <span className="hidden lg:inline">Search creators</span>
+            <span className="ml-1 hidden items-center gap-0.5 lg:inline-flex">
+              <span className="kbd">⌘</span>
+              <span className="kbd">K</span>
+            </span>
+          </button>
           <Button asChild variant="ghost" size="sm">
             <Link href="/sign-in">Sign in</Link>
           </Button>
-          <Button asChild size="sm">
+          <Button asChild size="sm" className="group">
             <Link href="/sign-up">
               Claim your handle
-              <ArrowUpRight className="h-3.5 w-3.5" />
+              <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
           </Button>
         </div>

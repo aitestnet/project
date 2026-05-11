@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/site/navbar";
 import { Footer } from "@/components/site/footer";
 import { Hero } from "@/components/landing/hero";
+import { LogoCloud } from "@/components/landing/logo-cloud";
 import { Stats } from "@/components/landing/stats";
 import { Features } from "@/components/landing/features";
 import { RuntimeShowcase } from "@/components/landing/runtime-showcase";
@@ -16,6 +17,7 @@ export default function LandingPage() {
       <Navbar />
       <main className="flex-1">
         <Hero />
+        <LogoCloud />
         <Stats />
         <Features />
         <RuntimeShowcase />
