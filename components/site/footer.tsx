@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Github, Twitter, Linkedin, Youtube, Globe } from "lucide-react";
 
 import { Logo } from "@/components/site/logo";
 
@@ -56,6 +57,31 @@ export function Footer() {
             <div className="mt-6 flex items-center gap-2 text-xs text-muted-foreground">
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500 text-emerald-500 pulse-dot" />
               All systems normal
+            </div>
+            <div className="mt-5 flex items-center gap-1.5">
+              {[
+                { Icon: Twitter, href: "#", label: "Twitter" },
+                { Icon: Github, href: "#", label: "GitHub" },
+                { Icon: Linkedin, href: "#", label: "LinkedIn" },
+                { Icon: Youtube, href: "#", label: "YouTube" }
+              ].map(({ Icon, href, label }) => (
+                <Link
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="flex h-8 w-8 items-center justify-center rounded-md border bg-card text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
+                >
+                  <Icon className="h-3.5 w-3.5" />
+                </Link>
+              ))}
+              <span className="mx-1 inline-block h-4 w-px bg-border" />
+              <button
+                type="button"
+                className="inline-flex items-center gap-1.5 rounded-md border bg-card px-2.5 h-8 text-[11px] font-medium text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
+              >
+                <Globe className="h-3 w-3" />
+                EN · Global
+              </button>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-8 md:col-span-8 md:grid-cols-4">

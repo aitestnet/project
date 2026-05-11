@@ -1,19 +1,74 @@
 "use client";
 
 import * as React from "react";
-import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useTransform,
+  animate
+} from "framer-motion";
+import { Users, Package, Cpu, DollarSign } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 import { teskelStats } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
-const items: { label: string; value: number; suffix?: string; prefix?: string; decimals?: number }[] = [
-  { label: "AI creators", value: teskelStats.creators, suffix: "+" },
-  { label: "Digital products", value: teskelStats.products },
-  { label: "Live runtimes", value: teskelStats.deployments },
-  { label: "Creator GMV", value: teskelStats.revenue, prefix: "$", suffix: "M", decimals: 1 }
+type Item = {
+  label: string;
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  decimals?: number;
+  Icon: LucideIcon;
+  tint: string;
+  text: string;
+};
+
+const items: Item[] = [
+  {
+    label: "AI creators",
+    value: teskelStats.creators,
+    suffix: "+",
+    Icon: Users,
+    tint: "bg-tint-indigo",
+    text: "text-indigo-500"
+  },
+  {
+    label: "Digital products",
+    value: teskelStats.products,
+    Icon: Package,
+    tint: "bg-tint-violet",
+    text: "text-violet-500"
+  },
+  {
+    label: "Live runtimes",
+    value: teskelStats.deployments,
+    Icon: Cpu,
+    tint: "bg-tint-emerald",
+    text: "text-emerald-500"
+  },
+  {
+    label: "Creator GMV",
+    value: teskelStats.revenue,
+    prefix: "$",
+    suffix: "M",
+    decimals: 1,
+    Icon: DollarSign,
+    tint: "bg-tint-amber",
+    text: "text-amber-500"
+  }
 ];
 
-function CountUp({ to, decimals = 0, duration = 1.6 }: { to: number; decimals?: number; duration?: number }) {
+function CountUp({
+  to,
+  decimals = 0,
+  duration = 1.6
+}: {
+  to: number;
+  decimals?: number;
+  duration?: number;
+}) {
   const ref = React.useRef<HTMLSpanElement | null>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
   const mv = useMotionValue(0);
@@ -38,7 +93,7 @@ export function Stats() {
     <section className="container mt-20 md:mt-28">
       <div
         className={cn(
-          "grid grid-cols-2 divide-x divide-y divide-border overflow-hidden rounded-2xl border bg-card md:grid-cols-4 md:divide-y-0"
+          "grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4"
         )}
       >
         {items.map((s, i) => (
@@ -47,18 +102,38 @@ export function Stats() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.55, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] }}
-            className="group relative p-6 md:p-8"
+            transition={{
+              duration: 0.55,
+              delay: i * 0.06,
+              ease: [0.22, 1, 0.36, 1]
+            }}
+            className="group relative overflow-hidden rounded-2xl border bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-card md:p-6"
           >
-            <p className="font-display text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
-              {s.prefix}
-              <CountUp to={s.value} decimals={s.decimals ?? 0} />
-              <span className="text-muted-foreground">{s.suffix}</span>
-            </p>
-            <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+            <span
+              aria-hidden
+              className={cn(
+                "pointer-events-none absolute -top-12 -right-12 h-32 w-32 rounded-full opacity-70 blur-2xl",
+                s.tint
+              )}
+            />
+            <div className="relative flex items-start justify-between">
+              <p className="font-display text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
+                {s.prefix}
+                <CountUp to={s.value} decimals={s.decimals ?? 0} />
+                <span className="text-muted-foreground">{s.suffix}</span>
+              </p>
+              <span
+                className={cn(
+                  "flex h-7 w-7 items-center justify-center rounded-md border bg-background",
+                  s.text
+                )}
+              >
+                <s.Icon className="h-3.5 w-3.5" />
+              </span>
+            </div>
+            <p className="relative mt-3 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
               {s.label}
             </p>
-            <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px scale-x-0 bg-foreground transition-transform duration-500 group-hover:scale-x-100" />
           </motion.div>
         ))}
       </div>

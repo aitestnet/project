@@ -6,6 +6,7 @@ import { Stats } from "@/components/landing/stats";
 import { Features } from "@/components/landing/features";
 import { RuntimeShowcase } from "@/components/landing/runtime-showcase";
 import { HowItWorks } from "@/components/landing/how-it-works";
+import { UseCases } from "@/components/landing/use-cases";
 import { Pricing } from "@/components/landing/pricing";
 import { Stack } from "@/components/landing/stack";
 import { Testimonials } from "@/components/landing/testimonials";
@@ -21,6 +22,7 @@ export default function LandingPage() {
         <Stats />
         <Features />
         <RuntimeShowcase />
+        <UseCases />
         <HowItWorks />
         <Stack />
         <Testimonials />

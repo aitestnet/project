@@ -254,6 +254,82 @@
   .underline-grow:hover {
     background-size: 100% 1px;
   }
+  .mesh-hero {
+    background-image:
+      radial-gradient(60% 50% at 15% 20%, hsl(238 86% 70% / 0.10), transparent 60%),
+      radial-gradient(50% 50% at 85% 10%, hsl(280 84% 70% / 0.10), transparent 60%),
+      radial-gradient(45% 40% at 95% 80%, hsl(36 100% 60% / 0.08), transparent 60%),
+      radial-gradient(40% 30% at 5% 90%, hsl(160 70% 55% / 0.08), transparent 60%);
+  }
+  .mesh-soft {
+    background-image:
+      radial-gradient(50% 50% at 20% 30%, hsl(238 86% 70% / 0.05), transparent 60%),
+      radial-gradient(40% 50% at 90% 20%, hsl(280 84% 70% / 0.05), transparent 60%);
+  }
+  .mesh-dark {
+    background-image:
+      radial-gradient(60% 50% at 20% 0%, hsl(238 86% 70% / 0.20), transparent 60%),
+      radial-gradient(60% 50% at 80% 0%, hsl(280 84% 70% / 0.18), transparent 60%),
+      radial-gradient(60% 40% at 50% 100%, hsl(36 100% 65% / 0.12), transparent 60%);
+  }
+  .text-rainbow {
+    background: linear-gradient(
+      90deg,
+      hsl(238 86% 60%) 0%,
+      hsl(280 84% 60%) 35%,
+      hsl(330 84% 60%) 65%,
+      hsl(36 100% 55%) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .ring-tint-indigo {
+    box-shadow: 0 0 0 1px hsl(238 86% 70% / 0.30),
+      0 8px 28px -10px hsl(238 86% 60% / 0.25);
+  }
+  .glow-indigo {
+    box-shadow: 0 0 40px -8px hsl(238 86% 70% / 0.45);
+  }
+  .border-tint-indigo {
+    border-color: hsl(238 86% 70% / 0.45);
+  }
+  .bg-tint-indigo {
+    background-color: hsl(238 100% 97%);
+  }
+  .bg-tint-violet {
+    background-color: hsl(280 100% 97%);
+  }
+  .bg-tint-amber {
+    background-color: hsl(36 100% 96%);
+  }
+  .bg-tint-emerald {
+    background-color: hsl(160 70% 96%);
+  }
+  .beam {
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .beam::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+      from 0deg at 50% 50%,
+      transparent 0deg,
+      hsl(238 86% 70% / 0.6) 60deg,
+      hsl(280 84% 70% / 0.6) 90deg,
+      transparent 120deg,
+      transparent 360deg
+    );
+    animation: beam 6s linear infinite;
+  }
 }
 
 @keyframes marquee {
@@ -293,4 +369,15 @@
     transform: scale(1.8);
     opacity: 0;
   }
+}
+
+@keyframes beam {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }

@@ -58,9 +58,17 @@ export function RuntimeShowcase() {
   return (
     <section className="container mt-24 md:mt-32">
       <Reveal>
-        <div className="grid items-start gap-10 rounded-3xl border bg-card p-6 md:grid-cols-12 md:p-10 lg:p-14">
+        <div className="relative overflow-hidden rounded-3xl border bg-card p-6 md:p-10 lg:p-14">
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 mesh-soft"
+        />
+        <div className="relative grid items-start gap-10 md:grid-cols-12">
           <div className="md:col-span-6">
-            <Badge variant="outline" className="rounded-full text-[11px] font-medium">
+            <Badge
+              variant="outline"
+              className="rounded-full text-[11px] font-medium text-emerald-600 border-tint-indigo bg-tint-emerald"
+            >
               <Cpu className="mr-1 h-3 w-3" /> Executable Product Runtime
             </Badge>
             <h2 className="mt-4 font-display text-[32px] font-semibold tracking-[-0.02em] md:text-[44px]">
@@ -115,10 +123,19 @@ export function RuntimeShowcase() {
                   <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200" />
                   <span className="ml-2 font-mono text-[11px]">teskel — runtime</span>
                 </div>
-                <Badge variant="outline" className="rounded-full text-[10px]">
-                  <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500 text-emerald-500 pulse-dot" />
-                  {live.length} live
-                </Badge>
+                <div className="flex items-center gap-1.5">
+                  <Badge
+                    variant="outline"
+                    className="rounded-full text-[10px] text-muted-foreground"
+                  >
+                    <Globe className="mr-1 h-2.5 w-2.5" />
+                    sin1
+                  </Badge>
+                  <Badge variant="outline" className="rounded-full text-[10px]">
+                    <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500 text-emerald-500 pulse-dot" />
+                    {live.length} live
+                  </Badge>
+                </div>
               </div>
 
               <div className="relative flex gap-1 overflow-x-auto border-b px-2 py-2">
@@ -214,6 +231,7 @@ export function RuntimeShowcase() {
               </AnimatePresence>
             </div>
           </div>
+        </div>
         </div>
       </Reveal>
     </section>
