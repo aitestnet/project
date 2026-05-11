@@ -36,7 +36,10 @@ export default function AnalyticsPage() {
               <p className="text-sm font-semibold">Page visits</p>
               <p className="text-xs text-muted-foreground">Last 14 days</p>
             </div>
-            <Badge variant="success">+18%</Badge>
+            <Badge variant="outline">
+              <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              +18%
+            </Badge>
           </div>
           <Sparkline data={visitorsSeries} />
         </div>
@@ -46,9 +49,12 @@ export default function AnalyticsPage() {
               <p className="text-sm font-semibold">AI chat sessions</p>
               <p className="text-xs text-muted-foreground">Last 14 days</p>
             </div>
-            <Badge variant="success">+24%</Badge>
+            <Badge variant="outline">
+              <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              +24%
+            </Badge>
           </div>
-          <Sparkline data={chatsSeries} color="#d946ef" />
+          <Sparkline data={chatsSeries} />
         </div>
       </div>
 

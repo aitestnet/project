@@ -26,7 +26,7 @@ export default function AudiencePage() {
               <Mail className="h-3.5 w-3.5" />
               Broadcast
             </Button>
-            <Button variant="gradient">
+            <Button>
               <UserPlus className="h-3.5 w-3.5" />
               Invite
             </Button>
@@ -50,7 +50,7 @@ export default function AudiencePage() {
               <div className="col-span-5 flex items-center gap-3">
                 <Avatar className="h-8 w-8">
                   <AvatarImage
-                    src={`https://api.dicebear.com/9.x/notionists/svg?seed=${p.seed}&backgroundColor=ede9fe`}
+                    src={`https://api.dicebear.com/9.x/notionists/svg?seed=${p.seed}&backgroundColor=f5f5f5`}
                   />
                   <AvatarFallback>{p.name.slice(0, 2)}</AvatarFallback>
                 </Avatar>
@@ -62,16 +62,11 @@ export default function AudiencePage() {
                 </div>
               </div>
               <div className="col-span-3">
-                <Badge
-                  variant={
-                    p.tier === "Operator"
-                      ? "soft"
-                      : p.tier === "Founder"
-                        ? "success"
-                        : "outline"
-                  }
-                >
+                <Badge variant="outline">
                   {p.tier === "Operator" && <Crown className="mr-1 h-3 w-3" />}
+                  {p.tier === "Founder" && (
+                    <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  )}
                   {p.tier}
                 </Badge>
               </div>

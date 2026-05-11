@@ -102,8 +102,8 @@ export function PersonaChat({ creator }: { creator: Creator }) {
           </div>
           <div>
             <p className="flex items-center gap-1.5 text-sm font-semibold leading-tight">
-              {creator.name}'s AI twin
-              <Badge variant="soft" className="rounded-full px-1.5 py-0 text-[10px]">
+              {creator.name}&rsquo;s AI twin
+              <Badge variant="outline" className="rounded-full px-1.5 py-0 text-[10px]">
                 <Sparkles className="mr-0.5 h-2.5 w-2.5" />
                 AI
               </Badge>
@@ -159,7 +159,6 @@ export function PersonaChat({ creator }: { creator: Creator }) {
         />
         <Button
           type="submit"
-          variant="gradient"
           size="icon"
           className="h-10 w-10 rounded-lg"
           disabled={pending || !input.trim()}
@@ -194,9 +193,9 @@ function Bubble({ msg, creator }: { msg: Msg; creator: Creator }) {
       )}
       <div
         className={cn(
-          "max-w-[80%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed shadow-sm whitespace-pre-wrap",
+          "max-w-[80%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap",
           isUser
-            ? "rounded-br-md bg-gradient-to-br from-violet-600 to-fuchsia-500 text-white"
+            ? "rounded-br-md bg-foreground text-background"
             : "rounded-bl-md bg-secondary text-foreground"
         )}
       >

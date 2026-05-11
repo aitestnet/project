@@ -20,7 +20,7 @@ export default function PayoutsPage() {
         title="Payouts"
         description="Stripe, Lemon Squeezy, and Polar — unified."
         actions={
-          <Button variant="gradient">
+          <Button>
             <ArrowDownToLine className="h-3.5 w-3.5" />
             Withdraw
           </Button>
@@ -54,7 +54,10 @@ export default function PayoutsPage() {
               <div className="col-span-3 text-sm">{p.method}</div>
               <div className="col-span-2 text-sm font-medium">{p.amount}</div>
               <div className="col-span-2 flex justify-end">
-                <Badge variant="success">{p.status}</Badge>
+                <Badge variant="outline">
+                  <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  {p.status}
+                </Badge>
               </div>
             </div>
           ))}

@@ -30,7 +30,7 @@ export function ProfileHeader({ creator }: { creator: Creator }) {
   return (
     <section className="overflow-hidden rounded-3xl border bg-card">
       <div
-        className="relative h-44 w-full bg-gradient-to-br from-violet-200 via-fuchsia-200 to-amber-100 md:h-56"
+        className="relative h-40 w-full bg-secondary md:h-48"
         style={
           creator.cover
             ? {
@@ -54,7 +54,7 @@ export function ProfileHeader({ creator }: { creator: Creator }) {
               <h1 className="flex items-center gap-2 font-display text-2xl font-semibold tracking-tight md:text-3xl">
                 {creator.name}
                 {creator.verified && (
-                  <BadgeCheck className="h-5 w-5 fill-violet-600 text-white" />
+                  <BadgeCheck className="h-5 w-5 fill-foreground text-background" />
                 )}
               </h1>
               <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
@@ -82,9 +82,9 @@ export function ProfileHeader({ creator }: { creator: Creator }) {
               <Heart className="h-3.5 w-3.5" />
               Follow
             </Button>
-            <Button variant="gradient" size="sm">
+            <Button size="sm">
               <Sparkles className="h-3.5 w-3.5" />
-              Chat with {creator.name.split(" ")[0]}'s AI
+              Chat with {creator.name.split(" ")[0]}&rsquo;s AI
             </Button>
           </div>
         </div>
@@ -97,7 +97,7 @@ export function ProfileHeader({ creator }: { creator: Creator }) {
         </p>
 
         <div className="mt-5 flex flex-wrap items-center gap-2">
-          <Badge variant="soft">{creator.niche}</Badge>
+          <Badge variant="outline" className="bg-secondary">{creator.niche}</Badge>
           {creator.persona.expertise.slice(0, 3).map((e) => (
             <Badge key={e} variant="outline">
               {e}

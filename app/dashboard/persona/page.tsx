@@ -33,7 +33,7 @@ export default function PersonaPage() {
               <Sparkles className="h-3.5 w-3.5" />
               Test in chat
             </Button>
-            <Button variant="gradient">
+            <Button>
               <Save className="h-3.5 w-3.5" />
               Save persona
             </Button>
@@ -46,7 +46,7 @@ export default function PersonaPage() {
           <div className="rounded-2xl border bg-card p-6">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold">Identity</p>
-              <Badge variant="soft">
+              <Badge variant="outline">
                 <Bot className="mr-1 h-3 w-3" /> v1.2
               </Badge>
             </div>
@@ -123,7 +123,7 @@ export default function PersonaPage() {
                   className="flex items-center justify-between py-3"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-md bg-violet-100 text-violet-700">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-md border bg-secondary text-foreground">
                       <FileText className="h-4 w-4" />
                     </span>
                     <div>
@@ -133,7 +133,10 @@ export default function PersonaPage() {
                       </p>
                     </div>
                   </div>
-                  <Badge variant="success">Indexed</Badge>
+                  <Badge variant="outline">
+                    <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                    Indexed
+                  </Badge>
                 </div>
               ))}
             </div>
@@ -148,7 +151,7 @@ export default function PersonaPage() {
           <div className="rounded-2xl border bg-card p-6">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold">Health</p>
-              <Brain className="h-4 w-4 text-violet-600" />
+              <Brain className="h-4 w-4 text-foreground" />
             </div>
             <div className="mt-4 space-y-4 text-sm">
               <Row label="Knowledge coverage" value={82} />
@@ -193,9 +196,9 @@ export default function PersonaPage() {
                 <AvatarFallback>YP</AvatarFallback>
               </Avatar>
               <div>
-                <p className="text-sm font-medium">{creator.name}'s AI twin</p>
+                <p className="text-sm font-medium">{creator.name}&rsquo;s AI twin</p>
                 <p className="text-xs text-muted-foreground">
-                  Will say: <span className="italic">"{greeting}"</span>
+                  Will say: <span className="italic">&ldquo;{greeting}&rdquo;</span>
                 </p>
               </div>
             </div>

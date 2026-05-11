@@ -49,16 +49,16 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))"
         },
         brand: {
-          50: "#f4f3ff",
-          100: "#ebe9fe",
-          200: "#d9d6fe",
-          300: "#bdb4fe",
-          400: "#9b8afb",
-          500: "#7a5af8",
-          600: "#6938ef",
-          700: "#5925dc",
-          800: "#4a1fb8",
-          900: "#3e1c96"
+          50: "#fafafa",
+          100: "#f5f5f5",
+          200: "#e5e5e5",
+          300: "#d4d4d4",
+          400: "#a3a3a3",
+          500: "#737373",
+          600: "#525252",
+          700: "#404040",
+          800: "#262626",
+          900: "#171717"
         }
       },
       borderRadius: {
@@ -74,7 +74,12 @@ const config: Config = {
         "grid-soft":
           "linear-gradient(to right, hsl(var(--border)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border)) 1px, transparent 1px)",
         "gradient-brand":
-          "linear-gradient(135deg, #7a5af8 0%, #9b8afb 50%, #f0abfc 100%)"
+          "linear-gradient(180deg, #171717 0%, #404040 100%)"
+      },
+      boxShadow: {
+        soft: "0 1px 2px 0 rgb(0 0 0 / 0.04), 0 1px 1px -1px rgb(0 0 0 / 0.04)",
+        card: "0 1px 2px 0 rgb(0 0 0 / 0.04), 0 8px 24px -12px rgb(0 0 0 / 0.08)",
+        elev: "0 12px 32px -12px rgb(0 0 0 / 0.12)"
       },
       keyframes: {
         "accordion-down": {

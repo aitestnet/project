@@ -34,28 +34,26 @@ export default function DiscoverPage() {
       <main className="flex-1">
         <section className="container py-12">
           <div className="mx-auto max-w-2xl text-center">
-            <Badge variant="soft" className="rounded-full">
+            <Badge variant="outline" className="rounded-full text-[11px] font-medium">
               <Sparkles className="mr-1 h-3 w-3" />
               Discover
             </Badge>
-            <h1 className="mt-3 font-display text-3xl font-semibold tracking-tight md:text-4xl">
+            <h1 className="mt-3 font-display text-[32px] font-semibold tracking-[-0.02em] md:text-[40px]">
               Find creators with AI twins you can chat with.
             </h1>
             <p className="mt-3 text-muted-foreground">
               Explore identity pages, clone workflows, and join memberships from
               builders across the world.
             </p>
-            <div className="mt-6 flex items-center gap-2 rounded-2xl border bg-card p-2 shadow-sm">
-              <Search className="ml-2 h-4 w-4 text-muted-foreground" />
+            <div className="mt-6 flex items-center gap-2 rounded-xl border bg-card p-1.5 pl-3">
+              <Search className="h-4 w-4 text-muted-foreground" />
               <input
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 placeholder="Search creators, niches, products…"
-                className="flex-1 bg-transparent px-2 py-2 text-sm outline-none placeholder:text-muted-foreground"
+                className="flex-1 bg-transparent px-1 py-2 text-sm outline-none placeholder:text-muted-foreground"
               />
-              <Button size="sm" variant="gradient">
-                Search
-              </Button>
+              <Button size="sm">Search</Button>
             </div>
             <div className="mt-4 flex flex-wrap items-center justify-center gap-1.5">
               {niches.map((n) => (
@@ -64,7 +62,7 @@ export default function DiscoverPage() {
                   onClick={() => setNiche(n)}
                   className={`rounded-full border px-3 py-1 text-xs transition-colors ${
                     niche === n
-                      ? "border-violet-300 bg-violet-100 text-violet-700"
+                      ? "border-foreground bg-foreground text-background"
                       : "bg-background text-muted-foreground hover:bg-accent hover:text-foreground"
                   }`}
                 >
@@ -86,13 +84,10 @@ export default function DiscoverPage() {
                 <Link
                   href={`/${c.username}`}
                   key={c.username}
-                  className={`group relative overflow-hidden rounded-2xl border bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-lg`}
+                  className="group relative overflow-hidden rounded-2xl border bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-card"
                 >
-                  <div
-                    className={`pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br ${c.color}`}
-                  />
                   <div className="flex items-center gap-3">
-                    <Avatar className="h-12 w-12 ring-2 ring-white">
+                    <Avatar className="h-11 w-11 ring-1 ring-border">
                       <AvatarImage src={c.avatar} />
                       <AvatarFallback>{initials(c.name)}</AvatarFallback>
                     </Avatar>
@@ -100,7 +95,7 @@ export default function DiscoverPage() {
                       <p className="flex items-center gap-1 truncate font-semibold leading-tight">
                         {c.name}
                         {c.verified && (
-                          <BadgeCheck className="h-4 w-4 fill-violet-600 text-white" />
+                          <BadgeCheck className="h-4 w-4 fill-foreground text-background" />
                         )}
                       </p>
                       <p className="truncate font-mono text-xs text-muted-foreground">

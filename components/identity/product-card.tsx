@@ -25,26 +25,30 @@ const kindLabel: Record<Product["kind"], string> = {
 export function ProductCard({ product }: { product: Product }) {
   const isLive = product.runtime === "executable";
   return (
-    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border bg-card transition-all hover:-translate-y-0.5 hover:shadow-lg">
-      <div className="relative flex h-32 items-center justify-center bg-gradient-to-br from-violet-100 via-fuchsia-50 to-pink-100">
-        <span className="text-5xl drop-shadow-sm">{product.emoji}</span>
+    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border bg-card transition-all hover:-translate-y-0.5 hover:shadow-card">
+      <div className="relative flex h-28 items-center justify-center border-b bg-secondary">
+        <span className="text-4xl">{product.emoji}</span>
         <div className="absolute left-3 top-3 flex flex-wrap gap-1">
-          <Badge variant="outline" className="bg-white/80 backdrop-blur">
+          <Badge variant="outline" className="bg-background/80 backdrop-blur">
             {kindLabel[product.kind]}
           </Badge>
           {product.badges?.map((b) => (
-            <Badge key={b} variant="soft" className="backdrop-blur">
+            <Badge
+              key={b}
+              variant="outline"
+              className="bg-background/80 backdrop-blur"
+            >
               {b}
             </Badge>
           ))}
         </div>
         {isLive && (
           <Badge
-            variant="success"
-            className="absolute right-3 top-3 backdrop-blur"
+            variant="outline"
+            className="absolute right-3 top-3 bg-background/80 backdrop-blur"
           >
             <Cpu className="mr-1 h-3 w-3" />
-            Live runtime
+            Live
           </Badge>
         )}
       </div>
@@ -69,7 +73,7 @@ export function ProductCard({ product }: { product: Product }) {
               href={product.liveUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 font-mono text-[11px] text-violet-600 hover:underline"
+              className="inline-flex items-center gap-1 font-mono text-[11px] text-foreground hover:underline"
             >
               {product.liveUrl.replace(/^https?:\/\//, "")}
               <ArrowUpRight className="h-3 w-3" />
@@ -77,7 +81,7 @@ export function ProductCard({ product }: { product: Product }) {
           )}
         </div>
         <div className="mt-4 flex items-center gap-2">
-          <Button size="sm" variant="gradient" className="flex-1">
+          <Button size="sm" className="flex-1">
             <ShoppingCart className="h-3.5 w-3.5" />
             {isLive ? "Get access" : "Buy now"}
           </Button>

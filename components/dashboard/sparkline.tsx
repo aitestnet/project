@@ -2,7 +2,7 @@ import { useId } from "react";
 
 export function Sparkline({
   data,
-  color = "#7a5af8",
+  color = "#171717",
   height = 60
 }: {
   data: number[];

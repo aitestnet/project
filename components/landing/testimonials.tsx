@@ -9,7 +9,7 @@ const items = [
     name: "Aria Saraswati",
     handle: "aria.ai",
     avatar:
-      "https://api.dicebear.com/9.x/notionists/svg?seed=Aria&backgroundColor=fce7f3"
+      "https://api.dicebear.com/9.x/notionists/svg?seed=Aria&backgroundColor=f5f5f5"
   },
   {
     quote:
@@ -17,7 +17,7 @@ const items = [
     name: "Yogi Pradana",
     handle: "yogi.ai",
     avatar:
-      "https://api.dicebear.com/9.x/notionists/svg?seed=Yogi&backgroundColor=ede9fe"
+      "https://api.dicebear.com/9.x/notionists/svg?seed=Yogi&backgroundColor=f5f5f5"
   },
   {
     quote:
@@ -25,7 +25,7 @@ const items = [
     name: "Lina Park",
     handle: "lina.ai",
     avatar:
-      "https://api.dicebear.com/9.x/notionists/svg?seed=Lina&backgroundColor=dcfce7"
+      "https://api.dicebear.com/9.x/notionists/svg?seed=Lina&backgroundColor=f5f5f5"
   }
 ];
 
@@ -33,26 +33,26 @@ export function Testimonials() {
   return (
     <section className="container mt-24 md:mt-32">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-violet-600">
+        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
           Loved by builders
         </p>
-        <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+        <h2 className="mt-3 font-display text-[32px] font-semibold tracking-[-0.02em] sm:text-[40px]">
           What creators say
         </h2>
       </div>
 
-      <div className="mt-12 grid gap-4 md:grid-cols-3">
+      <div className="mt-12 grid gap-3 md:grid-cols-3">
         {items.map((t) => (
           <figure
             key={t.handle}
             className="flex h-full flex-col justify-between rounded-2xl border bg-card p-6"
           >
-            <Quote className="h-5 w-5 text-violet-500" />
-            <blockquote className="mt-4 text-sm leading-relaxed text-foreground/90">
-              "{t.quote}"
+            <Quote className="h-5 w-5 text-foreground" />
+            <blockquote className="mt-4 text-[15px] leading-relaxed text-foreground">
+              &ldquo;{t.quote}&rdquo;
             </blockquote>
             <figcaption className="mt-6 flex items-center gap-3">
-              <Avatar className="h-9 w-9">
+              <Avatar className="h-9 w-9 ring-1 ring-border">
                 <AvatarImage src={t.avatar} />
                 <AvatarFallback>{t.name.slice(0, 2)}</AvatarFallback>
               </Avatar>

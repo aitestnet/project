@@ -27,19 +27,19 @@ export function Features() {
   return (
     <section id="features" className="container mt-24 scroll-mt-24 md:mt-32">
       <div className="mx-auto max-w-2xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-violet-600">
+        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
           The platform
         </p>
-        <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+        <h2 className="mt-3 font-display text-[32px] font-semibold tracking-[-0.02em] sm:text-[40px]">
           One identity. Every way to monetize.
         </h2>
-        <p className="mt-4 text-muted-foreground">
+        <p className="mt-4 text-[15px] text-muted-foreground">
           A modern, AI-native stack that replaces Linktree, Gumroad, Patreon, and
           Character.AI — and adds executable software on top.
         </p>
       </div>
 
-      <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {features.map((f, i) => {
           const Icon = iconMap[f.icon] ?? Sparkles;
           return (
@@ -50,12 +50,14 @@ export function Features() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
             >
-              <Card className="group h-full transition-all hover:-translate-y-0.5 hover:shadow-md hover:ring-1 hover:ring-violet-200">
+              <Card className="group h-full transition-all hover:-translate-y-0.5 hover:shadow-card">
                 <CardContent className="p-6">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-100 text-violet-700 transition-colors group-hover:bg-violet-600 group-hover:text-white">
-                    <Icon className="h-5 w-5" />
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg border bg-background text-foreground transition-colors group-hover:bg-foreground group-hover:text-background">
+                    <Icon className="h-4 w-4" />
                   </div>
-                  <h3 className="mt-4 font-semibold tracking-tight">{f.title}</h3>
+                  <h3 className="mt-5 text-[15px] font-semibold tracking-tight">
+                    {f.title}
+                  </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     {f.description}
                   </p>
