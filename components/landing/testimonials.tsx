@@ -1,6 +1,9 @@
+"use client";
+
 import { Quote } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Reveal } from "@/components/site/reveal";
 
 const items = [
   {
@@ -26,45 +29,86 @@ const items = [
     handle: "lina.ai",
     avatar:
       "https://api.dicebear.com/9.x/notionists/svg?seed=Lina&backgroundColor=f5f5f5"
+  },
+  {
+    quote:
+      "I shipped a $9 mini SaaS from a prompt-pack idea in one weekend. Dokploy gave me SSL + a subdomain in 60 seconds.",
+    name: "Kenji Watanabe",
+    handle: "kenji.ai",
+    avatar:
+      "https://api.dicebear.com/9.x/notionists/svg?seed=Kenji&backgroundColor=f5f5f5"
+  },
+  {
+    quote:
+      "The persona engine understands my tone better than my own intern. Visitors actually convert from chat.",
+    name: "Noor Hadi",
+    handle: "noor.ai",
+    avatar:
+      "https://api.dicebear.com/9.x/notionists/svg?seed=Noor&backgroundColor=f5f5f5"
+  },
+  {
+    quote:
+      "One page replaced four SaaS tools. The numbers stack up — I'm saving ~$120/mo and selling more.",
+    name: "Ravi Anand",
+    handle: "ravi.ai",
+    avatar:
+      "https://api.dicebear.com/9.x/notionists/svg?seed=Ravi&backgroundColor=f5f5f5"
   }
 ];
 
-export function Testimonials() {
+function Card({ t }: { t: (typeof items)[number] }) {
   return (
-    <section className="container mt-24 md:mt-32">
-      <div className="mx-auto max-w-2xl text-center">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
-          Loved by builders
-        </p>
-        <h2 className="mt-3 font-display text-[32px] font-semibold tracking-[-0.02em] sm:text-[40px]">
-          What creators say
-        </h2>
+    <figure className="w-[340px] shrink-0 rounded-2xl border bg-card p-5 sm:w-[400px]">
+      <Quote className="h-4 w-4 text-foreground" />
+      <blockquote className="mt-3 text-[14px] leading-relaxed text-foreground">
+        &ldquo;{t.quote}&rdquo;
+      </blockquote>
+      <figcaption className="mt-5 flex items-center gap-3">
+        <Avatar className="h-9 w-9 ring-1 ring-border">
+          <AvatarImage src={t.avatar} />
+          <AvatarFallback>{t.name.slice(0, 2)}</AvatarFallback>
+        </Avatar>
+        <div>
+          <p className="text-sm font-medium">{t.name}</p>
+          <p className="font-mono text-xs text-muted-foreground">{t.handle}</p>
+        </div>
+      </figcaption>
+    </figure>
+  );
+}
+
+export function Testimonials() {
+  const rowA = [...items, ...items];
+  const rowB = [...items.slice().reverse(), ...items.slice().reverse()];
+
+  return (
+    <section className="mt-24 md:mt-32">
+      <div className="container">
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+            Loved by builders
+          </p>
+          <h2 className="mt-3 font-display text-[32px] font-semibold tracking-[-0.02em] sm:text-[44px]">
+            What creators say
+          </h2>
+        </Reveal>
       </div>
 
-      <div className="mt-12 grid gap-3 md:grid-cols-3">
-        {items.map((t) => (
-          <figure
-            key={t.handle}
-            className="flex h-full flex-col justify-between rounded-2xl border bg-card p-6"
-          >
-            <Quote className="h-5 w-5 text-foreground" />
-            <blockquote className="mt-4 text-[15px] leading-relaxed text-foreground">
-              &ldquo;{t.quote}&rdquo;
-            </blockquote>
-            <figcaption className="mt-6 flex items-center gap-3">
-              <Avatar className="h-9 w-9 ring-1 ring-border">
-                <AvatarImage src={t.avatar} />
-                <AvatarFallback>{t.name.slice(0, 2)}</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="text-sm font-medium">{t.name}</p>
-                <p className="font-mono text-xs text-muted-foreground">
-                  {t.handle}
-                </p>
-              </div>
-            </figcaption>
-          </figure>
-        ))}
+      <div className="pause-on-hover mt-12 space-y-3 mask-edges-x">
+        <div className="relative overflow-hidden">
+          <div className="marquee flex w-max gap-3">
+            {rowA.map((t, i) => (
+              <Card key={`a-${t.handle}-${i}`} t={t} />
+            ))}
+          </div>
+        </div>
+        <div className="relative overflow-hidden">
+          <div className="marquee-reverse flex w-max gap-3">
+            {rowB.map((t, i) => (
+              <Card key={`b-${t.handle}-${i}`} t={t} />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

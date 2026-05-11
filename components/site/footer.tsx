@@ -43,8 +43,9 @@ const cols: { title: string; links: { href: string; label: string }[] }[] = [
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t bg-background">
-      <div className="container py-16">
+    <footer className="relative mt-24 overflow-hidden border-t bg-background">
+      <div className="pointer-events-none absolute inset-0 grid-dots-faint opacity-60" />
+      <div className="container relative py-16">
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-4">
             <Logo />
@@ -53,7 +54,7 @@ export function Footer() {
               live, sellable software.
             </p>
             <div className="mt-6 flex items-center gap-2 text-xs text-muted-foreground">
-              <span className="inline-flex h-2 w-2 rounded-full bg-emerald-500 ring-2 ring-emerald-500/20" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500 text-emerald-500 pulse-dot" />
               All systems normal
             </div>
           </div>
@@ -83,6 +84,12 @@ export function Footer() {
             you<span className="text-foreground">.ai</span> · AI Identity Commerce
           </p>
         </div>
+      </div>
+      <div
+        aria-hidden
+        className="pointer-events-none -mb-24 select-none text-center font-display text-[18vw] font-semibold leading-none tracking-[-0.04em] text-foreground/[0.04]"
+      >
+        teskel
       </div>
     </footer>
   );
