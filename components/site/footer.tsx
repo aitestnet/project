@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
-import { Github, Twitter, Linkedin, Youtube, Globe } from "lucide-react";
+import * as React from "react";
+import { Github, Twitter, Linkedin, Youtube, Globe, ArrowRight } from "lucide-react";
 
 import { Logo } from "@/components/site/logo";
 
@@ -43,9 +46,57 @@ const cols: { title: string; links: { href: string; label: string }[] }[] = [
 ];
 
 export function Footer() {
+  const [email, setEmail] = React.useState("");
+  const [subscribed, setSubscribed] = React.useState(false);
+  const valid = /.+@.+\..+/.test(email);
   return (
     <footer className="relative mt-24 overflow-hidden border-t bg-background">
       <div className="pointer-events-none absolute inset-0 grid-dots-faint opacity-60" />
+
+      <div className="container relative pt-16">
+        <div className="grid items-end gap-6 border-b pb-12 md:grid-cols-12">
+          <div className="md:col-span-7">
+            <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+              The teskel weekly
+            </p>
+            <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.02em] sm:text-3xl">
+              Get drops, new templates, and beta invites.
+            </h3>
+          </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (valid) setSubscribed(true);
+            }}
+            className="md:col-span-5"
+          >
+            <div className="flex flex-col items-stretch gap-2 sm:flex-row">
+              <label className="flex flex-1 items-center rounded-xl border bg-background px-3 transition-shadow focus-within:ring-2 focus-within:ring-foreground/15">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={subscribed ? "You're on the list ✓" : "you@domain.com"}
+                  disabled={subscribed}
+                  className="w-full bg-transparent px-1 py-2.5 text-sm outline-none placeholder:text-muted-foreground"
+                />
+              </label>
+              <button
+                type="submit"
+                disabled={!valid || subscribed}
+                className="inline-flex items-center justify-center gap-1.5 rounded-xl border bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-50"
+              >
+                {subscribed ? "Subscribed" : "Subscribe"}
+                {!subscribed && <ArrowRight className="h-3.5 w-3.5" />}
+              </button>
+            </div>
+            <p className="mt-2 text-[11px] text-muted-foreground">
+              One email per week. Unsubscribe anytime.
+            </p>
+          </form>
+        </div>
+      </div>
+
       <div className="container relative py-16">
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-4">
@@ -57,6 +108,8 @@ export function Footer() {
             <div className="mt-6 flex items-center gap-2 text-xs text-muted-foreground">
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500 text-emerald-500 pulse-dot" />
               All systems normal
+              <span className="mx-1 inline-block h-3 w-px bg-border" />
+              <span className="font-mono text-[11px]">99.99% uptime / 30d</span>
             </div>
             <div className="mt-5 flex items-center gap-1.5">
               {[

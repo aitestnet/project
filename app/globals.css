@@ -330,6 +330,124 @@
     );
     animation: beam 6s linear infinite;
   }
+  .conic-halo {
+    position: absolute;
+    border-radius: 9999px;
+    pointer-events: none;
+    background: conic-gradient(
+      from 0deg at 50% 50%,
+      hsl(238 86% 70% / 0) 0deg,
+      hsl(238 86% 70% / 0.35) 60deg,
+      hsl(280 84% 70% / 0.35) 120deg,
+      hsl(36 100% 60% / 0.30) 180deg,
+      hsl(160 70% 55% / 0.30) 240deg,
+      hsl(238 86% 70% / 0) 360deg
+    );
+    filter: blur(48px);
+    animation: conic-spin 18s linear infinite;
+  }
+  .ring-tint-violet {
+    box-shadow: 0 0 0 1px hsl(280 84% 70% / 0.30),
+      0 8px 28px -10px hsl(280 84% 60% / 0.25);
+  }
+  .ring-tint-amber {
+    box-shadow: 0 0 0 1px hsl(36 100% 60% / 0.35),
+      0 8px 28px -10px hsl(36 100% 55% / 0.25);
+  }
+  .ring-tint-emerald {
+    box-shadow: 0 0 0 1px hsl(160 70% 55% / 0.30),
+      0 8px 28px -10px hsl(160 70% 45% / 0.25);
+  }
+  .border-tint-violet {
+    border-color: hsl(280 84% 70% / 0.45);
+  }
+  .border-tint-amber {
+    border-color: hsl(36 100% 60% / 0.45);
+  }
+  .border-tint-emerald {
+    border-color: hsl(160 70% 55% / 0.45);
+  }
+  .glow-violet {
+    box-shadow: 0 0 40px -8px hsl(280 84% 70% / 0.45);
+  }
+  .glow-amber {
+    box-shadow: 0 0 40px -8px hsl(36 100% 60% / 0.40);
+  }
+  .glow-emerald {
+    box-shadow: 0 0 40px -8px hsl(160 70% 55% / 0.40);
+  }
+  .panel-dark {
+    background: radial-gradient(
+        110% 60% at 50% 0%,
+        hsl(238 60% 22% / 0.65) 0%,
+        hsl(0 0% 6%) 60%
+      ),
+      hsl(0 0% 6%);
+  }
+  .grid-lines-dark {
+    background-image: linear-gradient(
+        to right,
+        hsl(0 0% 100% / 0.06) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, hsl(0 0% 100% / 0.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(
+      ellipse 70% 80% at 50% 0%,
+      black 30%,
+      transparent 80%
+    );
+  }
+  .caret-blink::after {
+    content: "";
+    display: inline-block;
+    width: 0.55ch;
+    height: 1em;
+    margin-left: 2px;
+    background: currentColor;
+    vertical-align: -0.15em;
+    animation: caret-blink 1.05s steps(1, end) infinite;
+  }
+  .scroll-x-fade {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      black 4%,
+      black 96%,
+      transparent 100%
+    );
+  }
+  .ticker {
+    animation: ticker 32s linear infinite;
+  }
+  .pause-on-hover:hover .ticker {
+    animation-play-state: paused;
+  }
+  .annot-line {
+    background-image: linear-gradient(
+      to right,
+      hsl(0 0% 0% / 0.35) 0,
+      hsl(0 0% 0% / 0.35) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+    background-size: 12px 1px;
+    background-repeat: repeat-x;
+  }
+  .number-display {
+    font-feature-settings: "tnum" 1, "ss01" 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.04em;
+  }
+  .bg-stripes {
+    background-image: repeating-linear-gradient(
+      135deg,
+      hsl(0 0% 0% / 0.04) 0,
+      hsl(0 0% 0% / 0.04) 1px,
+      transparent 1px,
+      transparent 10px
+    );
+  }
 }
 
 @keyframes marquee {
@@ -380,4 +498,25 @@
 @keyframes float-y {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
+}
+
+@keyframes conic-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes caret-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes type-in {
+  from { width: 0; }
+  to { width: 100%; }
 }

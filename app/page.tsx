@@ -11,6 +11,9 @@ import { Pricing } from "@/components/landing/pricing";
 import { Stack } from "@/components/landing/stack";
 import { Testimonials } from "@/components/landing/testimonials";
 import { CTA } from "@/components/landing/cta";
+import { Compare } from "@/components/landing/compare";
+import { DeepDive } from "@/components/landing/deep-dive";
+import { FAQ } from "@/components/landing/faq";
 
 export default function LandingPage() {
   return (
@@ -22,11 +25,14 @@ export default function LandingPage() {
         <Stats />
         <Features />
         <RuntimeShowcase />
+        <DeepDive />
         <UseCases />
+        <Compare />
         <HowItWorks />
         <Stack />
         <Testimonials />
         <Pricing />
+        <FAQ />
         <CTA />
       </main>
       <Footer />
