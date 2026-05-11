@@ -88,17 +88,33 @@ export function Pricing() {
             >
               <Card
                 className={cn(
-                  "relative flex h-full flex-col transition-all hover:-translate-y-0.5 hover:shadow-card",
-                  tier.highlight ? "border-foreground/90 shadow-elev" : ""
+                  "relative flex h-full flex-col overflow-hidden transition-all hover:-translate-y-0.5 hover:shadow-card",
+                  tier.highlight
+                    ? "shadow-elev border-tint-indigo"
+                    : ""
                 )}
               >
                 {tier.highlight && (
-                  <span className="absolute -top-3 left-1/2 inline-flex -translate-x-1/2 items-center gap-1 rounded-full bg-foreground px-3 py-1 text-[11px] font-medium text-background">
-                    <Sparkles className="h-3 w-3" />
-                    Most popular
-                  </span>
+                  <>
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 mesh-soft opacity-90"
+                    />
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute -top-24 -left-24 h-48 w-48 rounded-full bg-tint-indigo opacity-70 blur-3xl"
+                    />
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute -bottom-24 -right-24 h-48 w-48 rounded-full bg-tint-violet opacity-70 blur-3xl"
+                    />
+                    <span className="absolute -top-3 left-1/2 z-10 inline-flex -translate-x-1/2 items-center gap-1 rounded-full bg-foreground px-3 py-1 text-[11px] font-medium text-background">
+                      <Sparkles className="h-3 w-3" />
+                      Most popular
+                    </span>
+                  </>
                 )}
-                <CardContent className="flex flex-1 flex-col p-6">
+                <CardContent className="relative flex flex-1 flex-col p-6">
                   <div className="flex items-center justify-between">
                     <h3 className="font-display text-lg font-semibold tracking-tight">
                       {tier.name}
@@ -135,7 +151,12 @@ export function Pricing() {
                   <ul className="mt-6 space-y-3 text-sm">
                     {tier.features.map((f) => (
                       <li key={f} className="flex items-start gap-2">
-                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-foreground" />
+                        <Check
+                          className={cn(
+                            "mt-0.5 h-4 w-4 shrink-0",
+                            tier.highlight ? "text-indigo-500" : "text-foreground"
+                          )}
+                        />
                         <span>{f}</span>
                       </li>
                     ))}

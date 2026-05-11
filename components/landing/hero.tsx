@@ -51,7 +51,8 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden border-b">
       <div className="pointer-events-none absolute inset-0 grid-bg" />
-      <div className="pointer-events-none absolute inset-0 grid-dots opacity-60" />
+      <div className="pointer-events-none absolute inset-0 grid-dots opacity-50" />
+      <div className="pointer-events-none absolute inset-0 mesh-hero" />
       <div className="container relative pt-20 pb-24 md:pt-28 md:pb-32 lg:pt-32">
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-7">
@@ -133,20 +134,53 @@ export function Hero() {
               </span>
             </motion.div>
 
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: STAGGER * 4, ease }}
+              className="mt-9 flex items-center gap-3"
+            >
+              <div className="flex -space-x-2">
+                {[
+                  { name: "Yogi", color: "bg-tint-indigo" },
+                  { name: "Aria", color: "bg-tint-violet" },
+                  { name: "Kenji", color: "bg-tint-amber" },
+                  { name: "Noor", color: "bg-tint-emerald" },
+                  { name: "Lina", color: "bg-secondary" }
+                ].map((p) => (
+                  <Avatar
+                    key={p.name}
+                    className={`h-7 w-7 ring-2 ring-background ${p.color}`}
+                  >
+                    <AvatarImage
+                      src={`https://api.dicebear.com/9.x/notionists/svg?seed=${p.name}&backgroundColor=transparent`}
+                    />
+                    <AvatarFallback className="text-[10px]">
+                      {initials(p.name)}
+                    </AvatarFallback>
+                  </Avatar>
+                ))}
+              </div>
+              <p className="text-[12px] text-muted-foreground">
+                <span className="font-medium text-foreground">1,200+ creators</span>{" "}
+                on the waitlist
+              </p>
+            </motion.div>
+
             <motion.ul
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: STAGGER * 5, ease }}
-              className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-muted-foreground"
+              className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-muted-foreground"
             >
               {[
-                "AI persona trained on your knowledge",
-                "Executable mini SaaS via Dokploy",
-                "Stripe + Lemon Squeezy ready"
-              ].map((t) => (
-                <li key={t} className="flex items-center gap-2">
-                  <Check className="h-3.5 w-3.5 text-foreground" />
-                  {t}
+                { t: "AI persona trained on your knowledge", c: "text-indigo-500" },
+                { t: "Executable mini SaaS via Dokploy", c: "text-emerald-500" },
+                { t: "Stripe + Lemon Squeezy ready", c: "text-amber-500" }
+              ].map((it) => (
+                <li key={it.t} className="flex items-center gap-2">
+                  <Check className={`h-3.5 w-3.5 ${it.c}`} />
+                  {it.t}
                 </li>
               ))}
             </motion.ul>
@@ -175,12 +209,12 @@ function HeroPreview({
 }) {
   return (
     <div className="relative">
-      <div className="absolute -inset-8 -z-10 rounded-[2rem] bg-gradient-to-b from-foreground/[0.04] to-transparent blur-2xl" />
+      <div className="absolute -inset-8 -z-10 rounded-[2rem] mesh-soft blur-2xl" />
       <motion.div
         initial={{ rotate: -1 }}
         animate={{ rotate: 0 }}
         transition={{ duration: 1.2, ease }}
-        className="relative rounded-2xl border bg-card shadow-card"
+        className="relative rounded-2xl border bg-card shadow-card ring-1 ring-foreground/5"
       >
         <div className="rounded-2xl">
           <div className="flex items-center justify-between border-b px-4 py-3">

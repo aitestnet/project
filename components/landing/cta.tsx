@@ -17,10 +17,7 @@ export function CTA() {
   return (
     <section className="container mt-24 md:mt-32">
       <div className="relative overflow-hidden rounded-3xl border bg-foreground px-6 py-14 text-background md:px-12 md:py-20">
-        <div
-          aria-hidden
-          className="absolute inset-0 opacity-[0.08] [background-image:radial-gradient(circle_at_30%_20%,white,transparent_45%)]"
-        />
+        <div aria-hidden className="absolute inset-0 mesh-dark" />
         <div
           aria-hidden
           className="absolute inset-0 opacity-[0.04] [background-image:linear-gradient(to_right,white_1px,transparent_1px),linear-gradient(to_bottom,white_1px,transparent_1px)] [background-size:56px_56px]"
@@ -72,6 +69,22 @@ export function CTA() {
           <p className="mt-3 text-xs text-background/50">
             Free forever for hobbyists. No credit card required.
           </p>
+
+          <div className="mt-7 flex flex-wrap items-center justify-center gap-1.5">
+            <span className="text-[11px] uppercase tracking-[0.16em] text-background/40">
+              Try one:
+            </span>
+            {["founder", "makes", "studio", "ship", "thinks"].map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => setHandle(s)}
+                className="rounded-full border border-background/15 bg-background/5 px-2.5 py-1 font-mono text-[11px] text-background/70 transition-colors hover:border-background/40 hover:text-background"
+              >
+                {s}.ai
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>

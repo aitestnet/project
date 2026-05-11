@@ -20,21 +20,27 @@ export function Logo({
         className
       )}
     >
-      <span className="relative inline-flex h-7 w-7 items-center justify-center overflow-hidden rounded-md bg-foreground text-background ring-1 ring-black/5">
-        <svg
-          viewBox="0 0 24 24"
+      <span className="relative inline-block">
+        <span className="relative inline-flex h-7 w-7 items-center justify-center overflow-hidden rounded-md bg-foreground text-background ring-1 ring-black/5">
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden
+            className="h-3.5 w-3.5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.4}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5 5h14" />
+            <path d="M12 5v14" />
+            <path d="M7.5 12c2.5 1.6 6.5 1.6 9 0" />
+          </svg>
+        </span>
+        <span
           aria-hidden
-          className="h-3.5 w-3.5"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2.4}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M5 5h14" />
-          <path d="M12 5v14" />
-          <path d="M7.5 12c2.5 1.6 6.5 1.6 9 0" />
-        </svg>
+          className="absolute -bottom-0.5 -right-0.5 h-1.5 w-1.5 rounded-full bg-indigo-400 ring-2 ring-background"
+        />
       </span>
       {showWordmark && (
         <span className="text-foreground">

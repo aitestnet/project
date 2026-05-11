@@ -56,10 +56,20 @@ const items = [
   }
 ];
 
+const accentByHandle: Record<string, string> = {
+  "aria.ai": "text-violet-500",
+  "yogi.ai": "text-indigo-500",
+  "lina.ai": "text-violet-500",
+  "kenji.ai": "text-amber-500",
+  "noor.ai": "text-emerald-500",
+  "ravi.ai": "text-indigo-500"
+};
+
 function Card({ t }: { t: (typeof items)[number] }) {
+  const accent = accentByHandle[t.handle] ?? "text-foreground";
   return (
-    <figure className="w-[340px] shrink-0 rounded-2xl border bg-card p-5 sm:w-[400px]">
-      <Quote className="h-4 w-4 text-foreground" />
+    <figure className="w-[340px] shrink-0 rounded-2xl border bg-card p-5 transition-colors hover:border-foreground/30 sm:w-[400px]">
+      <Quote className={`h-4 w-4 ${accent}`} />
       <blockquote className="mt-3 text-[14px] leading-relaxed text-foreground">
         &ldquo;{t.quote}&rdquo;
       </blockquote>
@@ -91,6 +101,26 @@ export function Testimonials() {
           <h2 className="mt-3 font-display text-[32px] font-semibold tracking-[-0.02em] sm:text-[44px]">
             What creators say
           </h2>
+        </Reveal>
+
+        <Reveal className="mt-7 flex items-center justify-center gap-3" delay={0.1}>
+          <div className="flex -space-x-2">
+            {items.slice(0, 6).map((t) => (
+              <Avatar
+                key={t.handle}
+                className="h-7 w-7 ring-2 ring-background"
+              >
+                <AvatarImage src={t.avatar} />
+                <AvatarFallback className="text-[10px]">
+                  {t.name.slice(0, 2)}
+                </AvatarFallback>
+              </Avatar>
+            ))}
+          </div>
+          <p className="text-[12px] text-muted-foreground">
+            <span className="font-medium text-foreground">4.9 / 5</span> from
+            early creators
+          </p>
         </Reveal>
       </div>
 

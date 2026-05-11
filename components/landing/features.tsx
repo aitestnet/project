@@ -25,6 +25,42 @@ const iconMap: Record<string, LucideIcon> = {
   Users
 };
 
+const accentMap: Record<
+  string,
+  { tint: string; text: string; borderHover: string }
+> = {
+  Sparkles: {
+    tint: "bg-tint-indigo",
+    text: "text-indigo-500",
+    borderHover: "group-hover:border-indigo-200"
+  },
+  Bot: {
+    tint: "bg-tint-indigo",
+    text: "text-indigo-500",
+    borderHover: "group-hover:border-indigo-200"
+  },
+  ShoppingBag: {
+    tint: "bg-tint-amber",
+    text: "text-amber-500",
+    borderHover: "group-hover:border-amber-200"
+  },
+  Cpu: {
+    tint: "bg-tint-emerald",
+    text: "text-emerald-500",
+    borderHover: "group-hover:border-emerald-200"
+  },
+  Wand2: {
+    tint: "bg-tint-violet",
+    text: "text-violet-500",
+    borderHover: "group-hover:border-violet-200"
+  },
+  Users: {
+    tint: "bg-tint-violet",
+    text: "text-violet-500",
+    borderHover: "group-hover:border-violet-200"
+  }
+};
+
 const layout: { span: string; preview?: "chat" | "products" | "runtime" }[] = [
   { span: "md:col-span-2 md:row-span-2", preview: "chat" },
   { span: "md:col-span-1" },
@@ -53,6 +89,12 @@ export function Features() {
       <div className="mt-12 grid auto-rows-[1fr] gap-3 md:grid-cols-3">
         {features.map((f, i) => {
           const Icon = iconMap[f.icon] ?? Sparkles;
+          const accent =
+            accentMap[f.icon] ?? {
+              tint: "bg-secondary",
+              text: "text-foreground",
+              borderHover: "group-hover:border-border"
+            };
           const cfg = layout[i] ?? { span: "" };
           return (
             <motion.article
@@ -66,13 +108,26 @@ export function Features() {
                 cfg.span
               )}
             >
-              <div className="flex items-start justify-between p-6">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg border bg-background text-foreground transition-colors group-hover:bg-foreground group-hover:text-background">
+              <span
+                aria-hidden
+                className={cn(
+                  "pointer-events-none absolute -top-16 -right-16 h-40 w-40 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-70",
+                  accent.tint
+                )}
+              />
+              <div className="relative flex items-start justify-between p-6">
+                <div
+                  className={cn(
+                    "flex h-9 w-9 items-center justify-center rounded-lg border bg-background transition-colors",
+                    accent.text,
+                    accent.borderHover
+                  )}
+                >
                   <Icon className="h-4 w-4" />
                 </div>
                 <ArrowUpRight className="h-4 w-4 -translate-y-1 translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
               </div>
-              <div className="px-6 pb-6">
+              <div className="relative px-6 pb-6">
                 <h3 className="text-[15px] font-semibold tracking-tight">
                   {f.title}
                 </h3>
