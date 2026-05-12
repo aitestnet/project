@@ -56,9 +56,9 @@ export function RuntimeShowcase() {
   const current = live[active];
 
   return (
-    <section className="container mt-24 md:mt-32">
+    <section className="container py-24 md:py-32">
       <Reveal>
-        <div className="relative overflow-hidden rounded-3xl border bg-card p-6 md:p-10 lg:p-14">
+        <div className="relative overflow-hidden rounded-3xl border border-border/50 bg-card/50 p-6 md:p-10 lg:p-14">
         <span
           aria-hidden
           className="pointer-events-none absolute inset-0 mesh-soft"
@@ -67,19 +67,19 @@ export function RuntimeShowcase() {
           <div className="md:col-span-6">
             <Badge
               variant="outline"
-              className="rounded-full text-[11px] font-medium text-emerald-600 border-tint-indigo bg-tint-emerald"
+              className="rounded-full border-border/50 text-[11px] font-medium text-emerald-600 bg-tint-emerald"
             >
-              <Cpu className="mr-1 h-3 w-3" /> Executable Product Runtime
+              <Cpu className="mr-1.5 h-3 w-3" /> Executable Product Runtime
             </Badge>
-            <h2 className="mt-4 font-display text-[32px] font-semibold tracking-[-0.02em] md:text-[44px]">
+            <h2 className="mt-5 font-display text-[30px] font-semibold tracking-[-0.025em] md:text-[42px]">
               Sell <span className="text-gradient">live software</span>, not dead PDFs.
             </h2>
-            <p className="mt-4 max-w-md text-[15px] text-muted-foreground">
+            <p className="mt-4 max-w-md text-[15px] leading-relaxed text-muted-foreground">
               Every product on Teskel can be a real, runnable app. We
               containerize, deploy, and SSL-secure it for you on its own
               subdomain — powered by Dokploy.
             </p>
-            <ul className="mt-6 grid gap-3 text-sm text-foreground">
+            <ul className="mt-7 grid gap-3.5 text-[14px] text-foreground">
               {[
                 { icon: Server, t: "Auto Docker deploy + zero-downtime updates" },
                 { icon: Globe, t: "Auto subdomain (tool.you.ai) with auto SSL" },
@@ -88,63 +88,63 @@ export function RuntimeShowcase() {
               ].map((i, idx) => (
                 <motion.li
                   key={i.t}
-                  initial={{ opacity: 0, x: -6 }}
+                  initial={{ opacity: 0, x: -8 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.45, delay: idx * 0.06, ease }}
+                  transition={{ duration: 0.45, delay: idx * 0.07, ease }}
                   className="flex items-start gap-3"
                 >
-                  <span className="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-md border bg-background">
+                  <span className="mt-0.5 inline-flex h-7 w-7 items-center justify-center rounded-lg border border-border/50 bg-background">
                     <i.icon className="h-3.5 w-3.5 text-foreground" />
                   </span>
-                  {i.t}
+                  <span className="text-[13.5px]">{i.t}</span>
                 </motion.li>
               ))}
             </ul>
-            <div className="mt-7 flex gap-2">
-              <Button asChild className="group">
+            <div className="mt-8 flex gap-2">
+              <Button asChild className="group rounded-full">
                 <Link href="/dashboard">
                   Open the dashboard
-                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  <ArrowUpRight className="ml-1 h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline">
+              <Button asChild variant="outline" className="rounded-full border-border/60">
                 <Link href="/discover">Browse live tools</Link>
               </Button>
             </div>
           </div>
 
           <div className="md:col-span-6">
-            <div className="overflow-hidden rounded-2xl border bg-background shadow-card">
-              <div className="flex items-center justify-between border-b px-4 py-2.5 text-xs">
+            <div className="overflow-hidden rounded-2xl border border-border/50 bg-background shadow-premium">
+              <div className="flex items-center justify-between border-b border-border/50 px-4 py-2.5 text-xs">
                 <div className="flex items-center gap-1.5 text-muted-foreground">
-                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200" />
-                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200" />
-                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200" />
-                  <span className="ml-2 font-mono text-[11px]">teskel — runtime</span>
+                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200/80" />
+                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200/80" />
+                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200/80" />
+                  <span className="ml-2 font-mono text-[11px] text-foreground/80">teskel — runtime</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Badge
                     variant="outline"
-                    className="rounded-full text-[10px] text-muted-foreground"
+                    className="rounded-full border-border/50 text-[10px] text-muted-foreground"
                   >
                     <Globe className="mr-1 h-2.5 w-2.5" />
                     sin1
                   </Badge>
-                  <Badge variant="outline" className="rounded-full text-[10px]">
+                  <Badge variant="outline" className="rounded-full border-border/50 text-[10px]">
                     <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500 text-emerald-500 pulse-dot" />
                     {live.length} live
                   </Badge>
                 </div>
               </div>
 
-              <div className="relative flex gap-1 overflow-x-auto border-b px-2 py-2">
+              <div className="relative flex gap-1 overflow-x-auto border-b border-border/50 px-2 py-2">
                 {live.map((l, i) => (
                   <button
                     key={l.url}
                     onClick={() => setActive(i)}
                     className={cn(
-                      "relative shrink-0 rounded-md px-3 py-1.5 text-[11px] font-medium transition-colors",
+                      "relative shrink-0 rounded-lg px-3 py-1.5 text-[11px] font-medium transition-colors",
                       active === i
                         ? "text-foreground"
                         : "text-muted-foreground hover:text-foreground"
@@ -153,7 +153,7 @@ export function RuntimeShowcase() {
                     {active === i && (
                       <motion.span
                         layoutId="runtime-tab"
-                        className="absolute inset-0 rounded-md bg-secondary"
+                        className="absolute inset-0 rounded-lg bg-secondary"
                         transition={{ type: "spring", stiffness: 360, damping: 30 }}
                       />
                     )}
@@ -173,7 +173,7 @@ export function RuntimeShowcase() {
                 >
                   <div>
                     <div className="flex items-center gap-2">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg border bg-secondary text-foreground">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-border/50 bg-secondary text-foreground">
                         <Cpu className="h-4 w-4" />
                       </div>
                       <div>
@@ -186,15 +186,15 @@ export function RuntimeShowcase() {
                       </div>
                     </div>
                     <div className="mt-4 grid gap-2 text-[11px]">
-                      <div className="flex items-center justify-between rounded-md border bg-card px-2.5 py-1.5">
+                      <div className="flex items-center justify-between rounded-lg border border-border/50 bg-card px-2.5 py-1.5">
                         <span className="text-muted-foreground">Kind</span>
                         <span className="font-medium">{current.kind}</span>
                       </div>
-                      <div className="flex items-center justify-between rounded-md border bg-card px-2.5 py-1.5">
+                      <div className="flex items-center justify-between rounded-lg border border-border/50 bg-card px-2.5 py-1.5">
                         <span className="text-muted-foreground">Price</span>
                         <span className="font-medium">${current.price}</span>
                       </div>
-                      <div className="flex items-center justify-between rounded-md border bg-card px-2.5 py-1.5">
+                      <div className="flex items-center justify-between rounded-lg border border-border/50 bg-card px-2.5 py-1.5">
                         <span className="text-muted-foreground">Status</span>
                         <span className="inline-flex items-center gap-1.5 font-medium">
                           <span className="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500 text-emerald-500 pulse-dot" />
@@ -204,8 +204,8 @@ export function RuntimeShowcase() {
                     </div>
                   </div>
 
-                  <div className="overflow-hidden rounded-lg border bg-secondary/60 font-mono text-[10.5px]">
-                    <div className="flex items-center gap-1.5 border-b bg-background/60 px-3 py-1.5 text-[10px] text-muted-foreground">
+                  <div className="overflow-hidden rounded-xl border border-border/50 bg-secondary/40 font-mono text-[10.5px]">
+                    <div className="flex items-center gap-1.5 border-b border-border/50 bg-background/60 px-3 py-1.5 text-[10px] text-muted-foreground">
                       <span className="inline-flex h-1.5 w-1.5 rounded-full bg-foreground" />
                       $ dokploy logs --tail
                     </div>
@@ -219,7 +219,7 @@ export function RuntimeShowcase() {
                           className={
                             line.startsWith("✓")
                               ? "text-emerald-600"
-                              : "text-foreground/80"
+                              : "text-foreground/70"
                           }
                         >
                           {line}

@@ -50,16 +50,17 @@ export function Footer() {
   const [subscribed, setSubscribed] = React.useState(false);
   const valid = /.+@.+\..+/.test(email);
   return (
-    <footer className="relative mt-24 overflow-hidden border-t bg-background">
-      <div className="pointer-events-none absolute inset-0 grid-dots-faint opacity-60" />
+    <footer className="relative overflow-hidden border-t border-border/50 bg-background">
+      <div className="pointer-events-none absolute inset-0 grid-dots-faint opacity-40" />
 
+      {/* Newsletter */}
       <div className="container relative pt-16">
-        <div className="grid items-end gap-6 border-b pb-12 md:grid-cols-12">
+        <div className="grid items-end gap-6 border-b border-border/50 pb-12 md:grid-cols-12">
           <div className="md:col-span-7">
             <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
               The teskel weekly
             </p>
-            <h3 className="mt-2 font-display text-2xl font-semibold tracking-[-0.02em] sm:text-3xl">
+            <h3 className="mt-3 font-display text-2xl font-semibold tracking-[-0.02em] text-gradient sm:text-3xl">
               Get drops, new templates, and beta invites.
             </h3>
           </div>
@@ -71,44 +72,45 @@ export function Footer() {
             className="md:col-span-5"
           >
             <div className="flex flex-col items-stretch gap-2 sm:flex-row">
-              <label className="flex flex-1 items-center rounded-xl border bg-background px-3 transition-shadow focus-within:ring-2 focus-within:ring-foreground/15">
+              <label className="flex flex-1 items-center rounded-xl border border-border/50 bg-background px-3 transition-shadow focus-within:ring-2 focus-within:ring-foreground/10">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder={subscribed ? "You're on the list ✓" : "you@domain.com"}
                   disabled={subscribed}
-                  className="w-full bg-transparent px-1 py-2.5 text-sm outline-none placeholder:text-muted-foreground"
+                  className="w-full bg-transparent px-1 py-2.5 text-sm outline-none placeholder:text-muted-foreground/60"
                 />
               </label>
               <button
                 type="submit"
                 disabled={!valid || subscribed}
-                className="inline-flex items-center justify-center gap-1.5 rounded-xl border bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-50"
+                className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-border/50 bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-50"
               >
                 {subscribed ? "Subscribed" : "Subscribe"}
                 {!subscribed && <ArrowRight className="h-3.5 w-3.5" />}
               </button>
             </div>
-            <p className="mt-2 text-[11px] text-muted-foreground">
+            <p className="mt-2 text-[11px] text-muted-foreground/60">
               One email per week. Unsubscribe anytime.
             </p>
           </form>
         </div>
       </div>
 
+      {/* Footer columns */}
       <div className="container relative py-16">
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-4">
             <Logo />
-            <p className="mt-4 max-w-xs text-sm text-muted-foreground">
+            <p className="mt-4 max-w-xs text-[13px] leading-relaxed text-muted-foreground">
               The AI identity & creator commerce layer. Turn your knowledge into
               live, sellable software.
             </p>
             <div className="mt-6 flex items-center gap-2 text-xs text-muted-foreground">
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500 text-emerald-500 pulse-dot" />
               All systems normal
-              <span className="mx-1 inline-block h-3 w-px bg-border" />
+              <span className="mx-1 inline-block h-3 w-px bg-border/60" />
               <span className="font-mono text-[11px]">99.99% uptime / 30d</span>
             </div>
             <div className="mt-5 flex items-center gap-1.5">
@@ -122,15 +124,15 @@ export function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="flex h-8 w-8 items-center justify-center rounded-md border bg-card text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg border border-border/50 bg-card/50 text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground"
                 >
                   <Icon className="h-3.5 w-3.5" />
                 </Link>
               ))}
-              <span className="mx-1 inline-block h-4 w-px bg-border" />
+              <span className="mx-1 inline-block h-4 w-px bg-border/50" />
               <button
                 type="button"
-                className="inline-flex items-center gap-1.5 rounded-md border bg-card px-2.5 h-8 text-[11px] font-medium text-muted-foreground transition-colors hover:border-foreground/30 hover:text-foreground"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-border/50 bg-card/50 px-2.5 h-8 text-[11px] font-medium text-muted-foreground transition-colors hover:border-foreground/20 hover:text-foreground"
               >
                 <Globe className="h-3 w-3" />
                 EN · Global
@@ -140,13 +142,13 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-8 md:col-span-8 md:grid-cols-4">
             {cols.map((c) => (
               <div key={c.title}>
-                <p className="text-sm font-semibold text-foreground">{c.title}</p>
-                <ul className="mt-3 space-y-2">
+                <p className="text-[12px] font-semibold text-foreground">{c.title}</p>
+                <ul className="mt-3 space-y-2.5">
                   {c.links.map((l) => (
                     <li key={l.label}>
                       <Link
                         href={l.href}
-                        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                        className="text-[13px] text-muted-foreground transition-colors hover:text-foreground"
                       >
                         {l.label}
                       </Link>
@@ -157,16 +159,18 @@ export function Footer() {
             ))}
           </div>
         </div>
-        <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t pt-6 text-xs text-muted-foreground md:flex-row md:items-center">
+        <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-border/50 pt-6 text-xs text-muted-foreground/60 md:flex-row md:items-center">
           <p>© {new Date().getFullYear()} Teskel Labs, Inc. Built with care.</p>
           <p className="font-mono">
             you<span className="text-foreground">.ai</span> · AI Identity Commerce
           </p>
         </div>
       </div>
+
+      {/* Giant watermark */}
       <div
         aria-hidden
-        className="pointer-events-none -mb-24 select-none text-center font-display text-[18vw] font-semibold leading-none tracking-[-0.04em] text-foreground/[0.04]"
+        className="pointer-events-none -mb-24 select-none text-center font-display text-[18vw] font-semibold leading-none tracking-[-0.04em] text-foreground/[0.025]"
       >
         teskel
       </div>

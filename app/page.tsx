@@ -15,6 +15,10 @@ import { Compare } from "@/components/landing/compare";
 import { DeepDive } from "@/components/landing/deep-dive";
 import { FAQ } from "@/components/landing/faq";
 
+function SectionDivider() {
+  return <div className="section-line mx-auto max-w-5xl" />;
+}
+
 export default function LandingPage() {
   return (
     <div className="flex min-h-screen flex-col">
@@ -23,15 +27,19 @@ export default function LandingPage() {
         <Hero />
         <LogoCloud />
         <Stats />
+        <SectionDivider />
         <Features />
         <RuntimeShowcase />
         <DeepDive />
         <UseCases />
+        <SectionDivider />
         <Compare />
         <HowItWorks />
+        <SectionDivider />
         <Stack />
         <Testimonials />
         <Pricing />
+        <SectionDivider />
         <FAQ />
         <CTA />
       </main>

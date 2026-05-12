@@ -1,4 +1,7 @@
-import { Check, Sparkles } from "lucide-react";
+"use client";
+
+import * as React from "react";
+import { Check, Sparkles, Loader2 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -6,6 +9,38 @@ import { cn } from "@/lib/utils";
 import type { Membership } from "@/lib/types";
 
 export function MembershipCard({ tier }: { tier: Membership }) {
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleCheckout = async () => {
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "membership",
+          membershipId: tier.id,
+          membershipName: tier.tier,
+          priceInCents: tier.priceMonthly * 100
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to create checkout session");
+      }
+
+      const { url } = await res.json();
+      if (url) {
+        window.location.href = url;
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Checkout is currently unavailable.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -37,7 +72,10 @@ export function MembershipCard({ tier }: { tier: Membership }) {
         className="mt-5"
         size="lg"
         variant={tier.highlight ? "default" : "outline"}
+        onClick={handleCheckout}
+        disabled={isLoading}
       >
+        {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         Join {tier.tier}
       </Button>
       <ul className="mt-5 space-y-2 text-sm">

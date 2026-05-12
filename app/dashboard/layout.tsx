@@ -17,7 +17,7 @@ export default function DashboardLayout({
           <div className="flex items-center gap-4">
             <Logo />
             <Badge variant="outline" className="hidden md:inline-flex">
-              Dashboard
+              AI Identity OS
             </Badge>
           </div>
           <div className="flex items-center gap-3">

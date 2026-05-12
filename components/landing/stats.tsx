@@ -110,7 +110,7 @@ function Sparkline({
     >
       <polygon
         points={areaPoints}
-        className={cn(stroke, "fill-current opacity-10")}
+        className={cn(stroke, "fill-current opacity-[0.08]")}
       />
       <polyline
         points={points}
@@ -153,13 +153,13 @@ function CountUp({
 
 export function Stats() {
   return (
-    <section className="container mt-20 md:mt-28">
-      <div className="mb-7 flex items-center justify-between gap-4">
+    <section className="container py-20 md:py-28">
+      <div className="mb-10 flex items-center justify-between gap-4">
         <div>
           <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
             By the numbers
           </p>
-          <h2 className="mt-2 font-display text-2xl font-semibold tracking-[-0.02em] sm:text-3xl">
+          <h2 className="mt-3 font-display text-[28px] font-semibold tracking-[-0.025em] text-gradient sm:text-[36px]">
             Growing fast, with creators in 42 countries.
           </h2>
         </div>
@@ -172,27 +172,27 @@ export function Stats() {
         {items.map((s, i) => (
           <motion.div
             key={s.label}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{
               duration: 0.55,
-              delay: i * 0.06,
+              delay: i * 0.07,
               ease: [0.22, 1, 0.36, 1]
             }}
-            className="group relative overflow-hidden rounded-2xl border bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-card md:p-6"
+            className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/50 p-5 transition-all duration-300 card-hover md:p-6"
           >
             <span
               aria-hidden
               className={cn(
-                "pointer-events-none absolute -top-12 -right-12 h-32 w-32 rounded-full opacity-70 blur-2xl",
+                "pointer-events-none absolute -top-14 -right-14 h-36 w-36 rounded-full opacity-50 blur-3xl transition-opacity duration-500 group-hover:opacity-70",
                 s.tint
               )}
             />
             <div className="relative flex items-start justify-between">
               <span
                 className={cn(
-                  "flex h-7 w-7 items-center justify-center rounded-md border bg-background",
+                  "flex h-8 w-8 items-center justify-center rounded-lg border border-border/50 bg-background",
                   s.text
                 )}
               >
@@ -208,10 +208,10 @@ export function Stats() {
                 {s.trend}
               </span>
             </div>
-            <p className="number-display relative mt-4 font-display text-[44px] font-semibold leading-none md:text-[56px]">
+            <p className="number-display relative mt-5 font-display text-[40px] font-semibold leading-none md:text-[52px]">
               {s.prefix}
               <CountUp to={s.value} decimals={s.decimals ?? 0} />
-              <span className="text-muted-foreground">{s.suffix}</span>
+              <span className="text-muted-foreground/60">{s.suffix}</span>
             </p>
             <p className="relative mt-3 text-[12px] font-medium text-foreground">
               {s.label}

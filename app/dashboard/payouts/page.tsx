@@ -4,16 +4,49 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/dashboard/section-header";
 import { StatCard } from "@/components/dashboard/stat-card";
+import { db } from "@/lib/db";
+import { formatCurrency } from "@/lib/utils";
 
-const payouts = [
-  { id: "po_8821", date: "Apr 04", method: "Stripe", amount: "$2,140.00", status: "Paid" },
-  { id: "po_8782", date: "Mar 21", method: "Lemon", amount: "$1,820.00", status: "Paid" },
-  { id: "po_8721", date: "Mar 07", method: "Stripe", amount: "$1,260.00", status: "Paid" },
-  { id: "po_8654", date: "Feb 22", method: "Polar", amount: "$640.00", status: "Paid" },
-  { id: "po_8612", date: "Feb 08", method: "Stripe", amount: "$2,810.00", status: "Paid" }
-];
+type PayoutOrder = {
+  id: string;
+  amount: number;
+  status: string;
+  paymentProvider: string;
+  createdAt: Date;
+};
 
-export default function PayoutsPage() {
+export default async function PayoutsPage() {
+  let clerkUserId: string | null = null;
+  try {
+    const { auth } = await import("@clerk/nextjs/server");
+    const session = await auth();
+    clerkUserId = session.userId;
+  } catch (e) {}
+
+  let creatorId: string | null = null;
+  if (clerkUserId) {
+    const c = await db.creator.findUnique({ where: { clerkUserId }, select: { id: true } });
+    if (c) creatorId = c.id;
+  }
+  if (!creatorId) {
+    const c = await db.creator.findFirst({ where: { username: "yogi" }, select: { id: true } });
+    if (c) creatorId = c.id;
+  }
+
+  const orders: PayoutOrder[] = creatorId
+    ? await db.order.findMany({
+        where: { product: { creatorId } },
+        orderBy: { createdAt: "desc" },
+        take: 50
+      })
+    : [];
+
+  const totalAmount = orders.reduce((sum: number, o: PayoutOrder) => sum + o.amount, 0) / 100;
+  const pendingAmount =
+    orders
+      .filter((o: PayoutOrder) => o.status === "pending")
+      .reduce((sum: number, o: PayoutOrder) => sum + o.amount, 0) / 100;
+
   return (
     <div className="space-y-6">
       <SectionHeader
@@ -27,10 +60,10 @@ export default function PayoutsPage() {
         }
       />
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label="Available" value="$4,210.00" icon={Wallet} />
-        <StatCard label="Pending" value="$840.50" icon={Banknote} />
-        <StatCard label="Paid out (30d)" value="$11,260.00" icon={CreditCard} delta="+18%" />
-        <StatCard label="Lifetime" value="$184,320.00" icon={Wallet} />
+        <StatCard label="Available" value={formatCurrency(totalAmount - pendingAmount)} icon={Wallet} />
+        <StatCard label="Pending" value={formatCurrency(pendingAmount)} icon={Banknote} />
+        <StatCard label="Paid out (30d)" value={formatCurrency(totalAmount)} icon={CreditCard} delta="+18%" />
+        <StatCard label="Lifetime" value={formatCurrency(totalAmount)} icon={Wallet} />
       </div>
 
       <div className="overflow-hidden rounded-2xl border bg-card">
@@ -42,25 +75,32 @@ export default function PayoutsPage() {
           <div className="col-span-2 text-right">Status</div>
         </div>
         <div className="divide-y">
-          {payouts.map((p) => (
-            <div
-              key={p.id}
-              className="grid grid-cols-12 items-center gap-2 px-4 py-3 hover:bg-secondary/40"
-            >
-              <div className="col-span-3 font-mono text-sm">{p.id}</div>
-              <div className="col-span-2 text-sm text-muted-foreground">
-                {p.date}
-              </div>
-              <div className="col-span-3 text-sm">{p.method}</div>
-              <div className="col-span-2 text-sm font-medium">{p.amount}</div>
-              <div className="col-span-2 flex justify-end">
-                <Badge variant="outline">
-                  <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  {p.status}
-                </Badge>
-              </div>
+          {orders.length === 0 ? (
+            <div className="p-8 text-center text-sm text-muted-foreground">
+              No payouts yet. Your sales will appear here.
             </div>
-          ))}
+          ) : (
+            orders.map((p: PayoutOrder) => (
+              <div
+                key={p.id}
+                className="grid grid-cols-12 items-center gap-2 px-4 py-3 hover:bg-secondary/40"
+              >
+                <div className="col-span-3 font-mono text-sm truncate">{p.id}</div>
+                <div className="col-span-2 text-sm text-muted-foreground">
+                  {new Intl.DateTimeFormat("en-US", { month: "short", day: "2-digit" }).format(new Date(p.createdAt))}
+                </div>
+                <div className="col-span-3 text-sm capitalize">{p.paymentProvider}</div>
+                <div className="col-span-2 text-sm font-medium">{formatCurrency(p.amount / 100)}</div>
+                <div className="col-span-2 flex justify-end">
+                  <Badge variant="outline">
+                    {p.status === "completed" && <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />}
+                    {p.status === "pending" && <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-amber-500" />}
+                    <span className="capitalize">{p.status}</span>
+                  </Badge>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

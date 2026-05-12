@@ -12,7 +12,8 @@ import {
   Globe,
   Zap,
   CreditCard,
-  Star
+  Star,
+  Play
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -45,7 +46,7 @@ const previewChat: { from: "ai" | "user"; text: string }[] = [
   }
 ];
 
-const STAGGER = 0.06;
+const STAGGER = 0.08;
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export function Hero() {
@@ -65,188 +66,166 @@ export function Hero() {
   }, [router]);
 
   return (
-    <section className="relative overflow-hidden border-b">
+    <section className="relative overflow-hidden">
+      {/* Background effects */}
       <div className="pointer-events-none absolute inset-0 grid-bg" />
-      <div className="pointer-events-none absolute inset-0 grid-lines opacity-60" />
-      <div className="pointer-events-none absolute inset-0 grid-dots opacity-40" />
+      <div className="pointer-events-none absolute inset-0 grid-lines opacity-50" />
       <div className="pointer-events-none absolute inset-0 mesh-hero" />
       <div
         aria-hidden
-        className="conic-halo opacity-60"
-        style={{ top: "-12%", right: "-8%", height: "560px", width: "560px" }}
+        className="conic-halo opacity-40"
+        style={{ top: "-15%", right: "-10%", height: "600px", width: "600px" }}
       />
       <div
         aria-hidden
-        className="conic-halo opacity-40"
+        className="conic-halo opacity-25"
         style={{
-          bottom: "-16%",
-          left: "-10%",
-          height: "420px",
-          width: "420px",
+          bottom: "-20%",
+          left: "-12%",
+          height: "450px",
+          width: "450px",
           animationDirection: "reverse",
-          animationDuration: "24s"
+          animationDuration: "26s"
         }}
       />
-      <div className="container relative pt-20 pb-12 md:pt-28 md:pb-16 lg:pt-32">
-        <div className="grid gap-14 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-7">
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease }}
-            >
-              <Badge
-                variant="outline"
-                className="group rounded-full bg-background px-3 py-1 text-[11px] font-medium text-muted-foreground"
-              >
-                <span className="relative mr-1.5 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500 text-emerald-500 pulse-dot" />
-                Now in private beta
-                <span className="mx-2 inline-block h-3 w-px bg-border" />
-                v0.1 changelog
-                <ArrowUpRight className="ml-1 h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </Badge>
-            </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: STAGGER, ease }}
-              className="mt-6 font-display text-[44px] font-semibold leading-[1.02] tracking-[-0.035em] text-balance text-foreground sm:text-[52px] lg:text-[76px]"
+      {/* Main hero content */}
+      <div className="container relative pt-24 pb-16 md:pt-32 md:pb-20 lg:pt-40 lg:pb-24">
+        {/* Centered top section */}
+        <div className="mx-auto max-w-4xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease }}
+          >
+            <Badge
+              variant="outline"
+              className="group mx-auto inline-flex rounded-full border-border/60 bg-background/80 px-3.5 py-1.5 text-[11px] font-medium text-muted-foreground backdrop-blur-sm"
             >
-              <span className="block">Your{" "}
-                <span className="relative inline-block font-mono text-[0.88em] text-muted-foreground">
-                  .ai
-                  <motion.span
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 0.7, delay: 0.55, ease }}
-                    style={{ transformOrigin: "left" }}
-                    className="absolute -bottom-1 left-0 right-0 h-[2px] bg-foreground"
-                  />
-                </span>{" "}
-                identity,
-              </span>
-              <span className="block text-shimmer">storefront, and AI twin</span>
-              <span className="block">
-                in <span className="font-display italic text-muted-foreground">one</span> place.
-              </span>
-            </motion.h1>
+              <span className="relative mr-2 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500 text-emerald-500 pulse-dot" />
+              Now in private beta
+              <span className="mx-2.5 inline-block h-3.5 w-px bg-border" />
+              <span className="text-foreground">v0.1</span>
+              <ArrowUpRight className="ml-1 h-3 w-3 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+            </Badge>
+          </motion.div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: STAGGER * 2, ease }}
-              className="mt-6 max-w-2xl text-[15px] leading-relaxed text-pretty text-muted-foreground sm:text-base"
-            >
-              Teskel is the AI-native creator commerce layer. Claim{" "}
-              <span className="rounded bg-secondary px-1.5 py-0.5 font-mono text-[0.92em] text-foreground">
-                username.ai
-              </span>
-              , train an AI persona of yourself, and sell real, executable software
-              — not just PDFs.
-            </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: STAGGER, ease }}
+            className="mx-auto mt-8 max-w-3xl font-display text-[42px] font-semibold leading-[1.05] tracking-[-0.035em] text-balance sm:text-[56px] lg:text-[72px]"
+          >
+            <span className="text-gradient">Your{" "}
+              <span className="relative inline-block font-mono text-[0.85em] text-muted-foreground">
+                .ai
+                <motion.span
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.7, delay: 0.6, ease }}
+                  style={{ transformOrigin: "left" }}
+                  className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-foreground/40"
+                />
+              </span>{" "}
+              identity,
+            </span>
+            <br />
+            <span className="text-shimmer">storefront & AI twin</span>
+          </motion.h1>
 
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: STAGGER * 3, ease }}
-              className="mt-8 flex flex-col gap-2 sm:flex-row sm:items-center"
-            >
-              <Button asChild size="lg" className="group">
-                <Link href="/sign-up">
-                  Claim your .ai handle
-                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </Link>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="group">
-                <Link href="/yogi">
-                  See a live demo
-                  <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              </Button>
-              <span className="hidden items-center gap-1.5 text-[11px] text-muted-foreground sm:inline-flex">
-                <span className="kbd">G</span>
-                <span>jump to demo</span>
-              </span>
-            </motion.div>
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: STAGGER * 2, ease }}
+            className="mx-auto mt-6 max-w-xl text-[15px] leading-relaxed text-muted-foreground sm:text-[16px] sm:leading-[1.7]"
+          >
+            Claim{" "}
+            <span className="rounded-md bg-secondary px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
+              username.ai
+            </span>
+            , train an AI persona of yourself, and sell real software — not just PDFs.
+          </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: STAGGER * 4, ease }}
-              className="mt-9 flex flex-wrap items-center gap-x-5 gap-y-3"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex -space-x-2">
-                  {[
-                    { name: "Yogi", color: "bg-tint-indigo" },
-                    { name: "Aria", color: "bg-tint-violet" },
-                    { name: "Kenji", color: "bg-tint-amber" },
-                    { name: "Noor", color: "bg-tint-emerald" },
-                    { name: "Lina", color: "bg-secondary" }
-                  ].map((p) => (
-                    <Avatar
-                      key={p.name}
-                      className={`h-7 w-7 ring-2 ring-background ${p.color}`}
-                    >
-                      <AvatarImage
-                        src={`https://api.dicebear.com/9.x/notionists/svg?seed=${p.name}&backgroundColor=transparent`}
-                      />
-                      <AvatarFallback className="text-[10px]">
-                        {initials(p.name)}
-                      </AvatarFallback>
-                    </Avatar>
-                  ))}
-                </div>
-                <p className="text-[12px] text-muted-foreground">
-                  <span className="font-medium text-foreground">1,200+ creators</span>{" "}
-                  on the waitlist
-                </p>
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: STAGGER * 3, ease }}
+            className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row"
+          >
+            <Button asChild size="lg" className="group h-11 rounded-full px-6 text-[14px] font-medium shadow-premium">
+              <Link href="/sign-up">
+                Claim your .ai handle
+                <ArrowUpRight className="ml-1.5 h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="group h-11 rounded-full border-border/60 px-6 text-[14px] font-medium">
+              <Link href="/yogi">
+                <Play className="mr-1.5 h-3.5 w-3.5" />
+                See live demo
+              </Link>
+            </Button>
+          </motion.div>
+
+          {/* Social proof row */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, delay: STAGGER * 4, ease }}
+            className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6"
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex -space-x-2.5">
+                {[
+                  { name: "Yogi", color: "bg-tint-indigo" },
+                  { name: "Aria", color: "bg-tint-violet" },
+                  { name: "Kenji", color: "bg-tint-amber" },
+                  { name: "Noor", color: "bg-tint-emerald" },
+                  { name: "Lina", color: "bg-secondary" }
+                ].map((p) => (
+                  <Avatar
+                    key={p.name}
+                    className={`h-7 w-7 ring-2 ring-background ${p.color}`}
+                  >
+                    <AvatarImage
+                      src={`https://api.dicebear.com/9.x/notionists/svg?seed=${p.name}&backgroundColor=transparent`}
+                    />
+                    <AvatarFallback className="text-[10px]">
+                      {initials(p.name)}
+                    </AvatarFallback>
+                  </Avatar>
+                ))}
               </div>
-              <span className="hidden h-4 w-px bg-border sm:inline-block" />
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-center gap-0.5 text-amber-500">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-3 w-3 fill-current" />
-                  ))}
-                </div>
-                <span className="text-[12px] text-muted-foreground">
-                  <span className="font-medium text-foreground">4.9</span> on Product Hunt
-                </span>
+              <p className="text-[12px] text-muted-foreground">
+                <span className="font-medium text-foreground">1,200+</span>{" "}
+                on the waitlist
+              </p>
+            </div>
+            <span className="hidden h-4 w-px bg-border sm:inline-block" />
+            <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-0.5 text-amber-500">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="h-3 w-3 fill-current" />
+                ))}
               </div>
-            </motion.div>
-
-            <motion.ul
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: STAGGER * 5, ease }}
-              className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-muted-foreground"
-            >
-              {[
-                { t: "AI persona trained on your knowledge", c: "text-indigo-500" },
-                { t: "Executable mini SaaS via Dokploy", c: "text-emerald-500" },
-                { t: "Stripe + Lemon Squeezy ready", c: "text-amber-500" }
-              ].map((it) => (
-                <li key={it.t} className="flex items-center gap-2">
-                  <Check className={`h-3.5 w-3.5 ${it.c}`} />
-                  {it.t}
-                </li>
-              ))}
-            </motion.ul>
-          </div>
-
-          <div className="lg:col-span-5">
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.75, delay: 0.1, ease }}
-              className="relative"
-            >
-              <HeroPreview previewChat={previewChat} />
-            </motion.div>
-          </div>
+              <span className="text-[12px] text-muted-foreground">
+                <span className="font-medium text-foreground">4.9</span> on Product Hunt
+              </span>
+            </div>
+          </motion.div>
         </div>
+
+        {/* Dashboard preview card */}
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.35, ease }}
+          className="relative mx-auto mt-16 max-w-4xl lg:mt-20"
+        >
+          <HeroPreview previewChat={previewChat} />
+        </motion.div>
       </div>
+
+      {/* Live ticker strip */}
       <LiveTicker />
     </section>
   );
@@ -254,7 +233,7 @@ export function Hero() {
 
 function LiveTicker() {
   return (
-    <div className="relative border-t bg-background/80 backdrop-blur">
+    <div className="relative border-t border-border/60 bg-background/60 backdrop-blur-sm">
       <div className="container relative">
         <div className="flex items-center gap-3 py-2.5">
           <span className="flex shrink-0 items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
@@ -263,11 +242,11 @@ function LiveTicker() {
           </span>
           <span className="hidden h-3 w-px bg-border sm:inline-block" />
           <div className="relative flex-1 overflow-hidden scroll-x-fade pause-on-hover">
-            <div className="ticker flex w-max items-center gap-7 whitespace-nowrap text-[12px] text-muted-foreground">
+            <div className="ticker flex w-max items-center gap-8 whitespace-nowrap text-[12px] text-muted-foreground">
               {[...recentClaims, ...recentClaims].map((c, i) => (
                 <span key={i} className="flex items-center gap-1.5">
                   <span className="font-mono text-foreground">{c.handle}</span>
-                  <span className="text-[11px] text-muted-foreground/70">
+                  <span className="text-[11px] text-muted-foreground/60">
                     claimed {c.time} ago
                   </span>
                   <span className="inline-block h-1 w-1 rounded-full bg-border" />
@@ -288,13 +267,15 @@ function HeroPreview({
 }) {
   return (
     <div className="relative">
-      <div className="absolute -inset-8 -z-10 rounded-[2rem] mesh-soft blur-2xl" />
+      {/* Glow behind card */}
+      <div className="absolute -inset-6 -z-10 rounded-[2.5rem] bg-gradient-to-b from-indigo-500/[0.06] via-violet-500/[0.04] to-transparent blur-2xl" />
 
+      {/* Floating notification cards */}
       <motion.div
-        initial={{ opacity: 0, x: -16, rotate: -3 }}
+        initial={{ opacity: 0, x: -20, rotate: -3 }}
         animate={{ opacity: 1, x: 0, rotate: -3 }}
-        transition={{ duration: 0.8, delay: 0.45, ease }}
-        className="absolute -left-10 top-8 z-20 hidden w-[170px] rounded-2xl border bg-card p-3 shadow-elev ring-tint-amber lg:block"
+        transition={{ duration: 0.8, delay: 0.6, ease }}
+        className="absolute -left-8 top-10 z-20 hidden w-[170px] rounded-2xl border border-border/60 bg-card/95 p-3 shadow-premium backdrop-blur-sm lg:block"
       >
         <div className="flex items-center gap-1.5 text-[10px] font-medium text-muted-foreground">
           <CreditCard className="h-3 w-3 text-amber-500" />
@@ -310,10 +291,10 @@ function HeroPreview({
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, x: 16, rotate: 4 }}
+        initial={{ opacity: 0, x: 20, rotate: 4 }}
         animate={{ opacity: 1, x: 0, rotate: 4 }}
-        transition={{ duration: 0.8, delay: 0.55, ease }}
-        className="absolute -right-6 -bottom-6 z-20 hidden w-[200px] rounded-2xl border bg-card p-3 shadow-elev ring-tint-indigo lg:block"
+        transition={{ duration: 0.8, delay: 0.7, ease }}
+        className="absolute -right-6 -bottom-4 z-20 hidden w-[200px] rounded-2xl border border-border/60 bg-card/95 p-3 shadow-premium backdrop-blur-sm lg:block"
       >
         <div className="flex items-center gap-1.5 text-[10px] font-medium text-muted-foreground">
           <Zap className="h-3 w-3 text-indigo-500" />
@@ -336,34 +317,32 @@ function HeroPreview({
         </div>
       </motion.div>
 
-      <motion.div
-        initial={{ rotate: -1 }}
-        animate={{ rotate: 0 }}
-        transition={{ duration: 1.2, ease }}
-        className="relative z-10 rounded-2xl border bg-card shadow-card ring-1 ring-foreground/5"
-      >
+      {/* Main browser frame */}
+      <div className="relative z-10 overflow-hidden rounded-2xl border border-border/60 bg-card shadow-premium">
         <div className="rounded-2xl">
-          <div className="flex items-center justify-between border-b px-4 py-3">
+          {/* Browser chrome */}
+          <div className="flex items-center justify-between border-b border-border/60 px-4 py-3">
             <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200" />
-              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200" />
-              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200" />
-              <span className="ml-3 font-mono text-[11px] text-foreground">
+              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200/80" />
+              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200/80" />
+              <span className="inline-flex h-2.5 w-2.5 rounded-full bg-neutral-200/80" />
+              <span className="ml-3 font-mono text-[11px] text-foreground/80">
                 yogi.ai
               </span>
             </div>
             <Badge
               variant="outline"
-              className="rounded-full text-[10px] font-medium"
+              className="rounded-full border-border/60 text-[10px] font-medium"
             >
               <span className="mr-1 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500 text-emerald-500 pulse-dot" />
               Live
             </Badge>
           </div>
 
+          {/* Profile section */}
           <div className="p-5">
             <div className="flex items-center gap-3">
-              <Avatar className="h-11 w-11 ring-1 ring-border">
+              <Avatar className="h-11 w-11 ring-1 ring-border/60">
                 <AvatarImage src="https://api.dicebear.com/9.x/notionists/svg?seed=Yogi&backgroundColor=f5f5f5" />
                 <AvatarFallback>{initials("Yogi Pradana")}</AvatarFallback>
               </Avatar>
@@ -383,6 +362,7 @@ function HeroPreview({
               </div>
             </div>
 
+            {/* Quick stats */}
             <div className="mt-5 grid grid-cols-3 gap-2 text-center">
               {[
                 { icon: Bot, label: "AI Persona" },
@@ -391,7 +371,7 @@ function HeroPreview({
               ].map((s) => (
                 <div
                   key={s.label}
-                  className="group rounded-lg border bg-background px-2 py-2.5 transition-all hover:-translate-y-0.5 hover:border-foreground/40"
+                  className="group rounded-lg border border-border/60 bg-background px-2 py-2.5 transition-all hover:-translate-y-0.5 hover:border-foreground/20"
                 >
                   <s.icon className="mx-auto h-3.5 w-3.5 text-foreground" />
                   <p className="mt-1 text-[11px] font-medium">{s.label}</p>
@@ -399,13 +379,14 @@ function HeroPreview({
               ))}
             </div>
 
+            {/* Chat preview */}
             <div className="mt-5 space-y-2">
               {previewChat.map((m, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.5 + i * 0.25, ease }}
+                  transition={{ duration: 0.4, delay: 0.6 + i * 0.25, ease }}
                   className={
                     m.from === "ai"
                       ? "flex max-w-[88%] gap-2"
@@ -431,16 +412,17 @@ function HeroPreview({
               <motion.div
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 1.4, ease }}
+                transition={{ duration: 0.4, delay: 1.5, ease }}
                 className="flex max-w-[88%] items-center gap-1.5 pl-8"
               >
-                <span className="inline-block h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:-0.3s]" />
-                <span className="inline-block h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60 [animation-delay:-0.15s]" />
-                <span className="inline-block h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/60" />
+                <span className="inline-block h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/50 [animation-delay:-0.3s]" />
+                <span className="inline-block h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/50 [animation-delay:-0.15s]" />
+                <span className="inline-block h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/50" />
               </motion.div>
             </div>
 
-            <div className="mt-5 flex items-center gap-2 rounded-xl border bg-background p-1.5 pl-3">
+            {/* Input bar */}
+            <div className="mt-5 flex items-center gap-2 rounded-xl border border-border/60 bg-background p-1.5 pl-3">
               <input
                 readOnly
                 value="Ask Yogi's AI twin…"
@@ -449,13 +431,13 @@ function HeroPreview({
               <span className="kbd">
                 <CornerDownLeft className="h-2.5 w-2.5" />
               </span>
-              <Button size="sm" className="h-7 px-3 text-xs">
+              <Button size="sm" className="h-7 rounded-lg px-3 text-xs">
                 Send
               </Button>
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

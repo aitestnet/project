@@ -44,23 +44,23 @@ export function FAQ() {
   return (
     <section
       id="faq"
-      className="container mt-24 md:mt-32 scroll-mt-24"
+      className="container scroll-mt-24 py-24 md:py-32"
     >
-      <div className="grid gap-12 lg:grid-cols-12">
+      <div className="grid gap-14 lg:grid-cols-12">
         <div className="lg:col-span-4">
           <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
             Common questions
           </p>
-          <h2 className="mt-3 font-display text-3xl font-semibold tracking-[-0.025em] text-balance sm:text-4xl">
+          <h2 className="mt-4 font-display text-[28px] font-semibold tracking-[-0.025em] text-gradient text-balance sm:text-[36px]">
             Frequently asked.
           </h2>
-          <p className="mt-4 max-w-md text-pretty text-muted-foreground">
+          <p className="mt-5 max-w-md text-[14px] leading-relaxed text-pretty text-muted-foreground">
             Can&rsquo;t find what you&rsquo;re looking for? We&rsquo;re a small
             team and we answer fast.
           </p>
           <a
             href="mailto:hi@teskel.dev"
-            className="mt-6 inline-flex items-center gap-2 rounded-full border bg-card px-3.5 py-1.5 text-[12px] font-medium transition-colors hover:border-foreground/30"
+            className="mt-7 inline-flex items-center gap-2 rounded-full border border-border/50 bg-card/50 px-4 py-2 text-[12px] font-medium transition-all duration-300 card-hover"
           >
             <HelpCircle className="h-3.5 w-3.5 text-indigo-500" />
             hi@teskel.dev
@@ -68,7 +68,7 @@ export function FAQ() {
         </div>
 
         <div className="lg:col-span-8">
-          <ul className="divide-y rounded-2xl border bg-card">
+          <ul className="divide-y divide-border/50 rounded-2xl border border-border/50 bg-card/50">
             {items.map((it, i) => {
               const isOpen = open === i;
               return (
@@ -77,19 +77,19 @@ export function FAQ() {
                     type="button"
                     onClick={() => setOpen(isOpen ? null : i)}
                     aria-expanded={isOpen}
-                    className="flex w-full items-start gap-4 px-5 py-4 text-left transition-colors hover:bg-background/60"
+                    className="flex w-full items-start gap-4 px-5 py-4 text-left transition-colors hover:bg-background/50"
                   >
                     <span
                       className={cn(
-                        "mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border bg-background transition-transform",
+                        "mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border transition-all duration-300",
                         isOpen
-                          ? "rotate-45 border-tint-indigo bg-tint-indigo text-indigo-500"
-                          : "text-muted-foreground"
+                          ? "rotate-45 border-indigo-200/80 bg-tint-indigo text-indigo-500"
+                          : "border-border/50 bg-background text-muted-foreground"
                       )}
                     >
                       <Plus className="h-3.5 w-3.5" />
                     </span>
-                    <span className="flex-1 pt-0.5 font-display text-[16px] font-medium tracking-[-0.01em] text-foreground sm:text-[17px]">
+                    <span className="flex-1 pt-0.5 font-display text-[15px] font-medium tracking-[-0.01em] text-foreground sm:text-[16px]">
                       {it.q}
                     </span>
                   </button>
@@ -105,7 +105,7 @@ export function FAQ() {
                         }}
                         className="overflow-hidden"
                       >
-                        <p className="px-5 pb-5 pl-[64px] text-[14px] leading-relaxed text-muted-foreground">
+                        <p className="px-5 pb-5 pl-[64px] text-[13.5px] leading-relaxed text-muted-foreground">
                           {it.a}
                         </p>
                       </motion.div>

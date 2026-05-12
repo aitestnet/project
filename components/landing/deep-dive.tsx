@@ -39,37 +39,37 @@ const features = [
 
 export function DeepDive() {
   return (
-    <section className="relative mt-24 md:mt-32 overflow-hidden border-y panel-dark text-white">
+    <section className="relative overflow-hidden border-y border-white/[0.06] panel-dark text-white">
       <div className="pointer-events-none absolute inset-0 grid-lines-dark" />
-      <div className="pointer-events-none absolute inset-0 mesh-dark opacity-40" />
+      <div className="pointer-events-none absolute inset-0 mesh-dark opacity-50" />
 
-      <div className="container relative py-20 md:py-28">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-14">
+      <div className="container relative py-24 md:py-32">
+        <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-6">
-            <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/50">
+            <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/40">
               Built for builders
             </p>
-            <h2 className="mt-3 font-display text-3xl font-semibold tracking-[-0.025em] text-balance sm:text-4xl lg:text-[44px]">
+            <h2 className="mt-4 font-display text-[30px] font-semibold tracking-[-0.025em] text-balance sm:text-[38px] lg:text-[44px]">
               <span className="text-shimmer-light">Composable</span> creator
               infrastructure.
             </h2>
-            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-white/65 sm:text-base">
+            <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-white/55 sm:text-base">
               Teskel is opinionated where it should be (an identity, a persona,
               an executable runtime) and unopinionated everywhere else. Use our
               cloud or run it on your own infra. It&rsquo;s your stack.
             </p>
 
-            <ul className="mt-8 space-y-5">
+            <ul className="mt-9 space-y-6">
               {features.map((f) => (
-                <li key={f.title} className="flex gap-3.5">
-                  <span className="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] text-indigo-300">
-                    <f.Icon className="h-4 w-4" />
+                <li key={f.title} className="flex gap-4">
+                  <span className="mt-0.5 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.03] text-indigo-300">
+                    <f.Icon className="h-[18px] w-[18px]" />
                   </span>
                   <div>
                     <p className="text-[14px] font-semibold text-white">
                       {f.title}
                     </p>
-                    <p className="text-[13px] leading-relaxed text-white/60">
+                    <p className="mt-1 text-[13px] leading-relaxed text-white/50">
                       {f.body}
                     </p>
                   </div>
@@ -77,22 +77,22 @@ export function DeepDive() {
               ))}
             </ul>
 
-            <div className="mt-9 flex flex-wrap items-center gap-3">
+            <div className="mt-10 flex flex-wrap items-center gap-3">
               <Button
                 asChild
                 size="lg"
-                className="bg-white text-foreground hover:bg-white/90"
+                className="rounded-full bg-white text-foreground hover:bg-white/90 shadow-premium"
               >
                 <Link href="/dashboard">
                   Open the dashboard
-                  <ArrowUpRight className="h-4 w-4" />
+                  <ArrowUpRight className="ml-1 h-4 w-4" />
                 </Link>
               </Button>
               <Button
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-white/15 bg-white/[0.04] text-white hover:bg-white/[0.08] hover:text-white"
+                className="rounded-full border-white/[0.12] bg-white/[0.04] text-white hover:bg-white/[0.08] hover:text-white"
               >
                 <Link href="/discover">Browse the API</Link>
               </Button>
@@ -101,22 +101,22 @@ export function DeepDive() {
 
           <div className="lg:col-span-6">
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="relative rounded-2xl border border-white/10 bg-black/40 shadow-elev backdrop-blur"
+              className="relative rounded-2xl border border-white/[0.08] bg-black/50 shadow-premium backdrop-blur-sm"
             >
-              <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
-                <div className="flex items-center gap-1.5 text-[11px] text-white/60">
-                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-red-400/70" />
-                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-amber-400/70" />
-                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400/70" />
-                  <span className="ml-3 font-mono text-[10px] text-white/70">
+              <div className="flex items-center justify-between border-b border-white/[0.08] px-4 py-2.5">
+                <div className="flex items-center gap-1.5 text-[11px] text-white/50">
+                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-red-400/60" />
+                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-amber-400/60" />
+                  <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400/60" />
+                  <span className="ml-3 font-mono text-[10px] text-white/60">
                     ~/teskel — main
                   </span>
                 </div>
-                <span className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-medium text-white/70">
+                <span className="inline-flex items-center gap-1 rounded-full border border-white/[0.08] bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium text-white/60">
                   <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
                   zsh
                 </span>
@@ -135,7 +135,7 @@ export function DeepDive() {
                     }}
                     className="flex gap-2"
                   >
-                    <span className="text-white/30">{l.prefix}</span>
+                    <span className="text-white/25">{l.prefix}</span>
                     <span className={l.c}>{l.text}</span>
                   </motion.div>
                 ))}
@@ -144,20 +144,20 @@ export function DeepDive() {
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: 1.0 }}
-                  className="flex gap-2 text-white/80 caret-blink"
+                  className="flex gap-2 text-white/70 caret-blink"
                 >
-                  <span className="text-white/30">$</span>
+                  <span className="text-white/25">$</span>
                   <span> </span>
                 </motion.div>
               </div>
 
-              <div className="border-t border-white/10 px-5 py-3 text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+              <div className="border-t border-white/[0.08] px-5 py-3 text-[10px] font-medium uppercase tracking-[0.16em] text-white/35">
                 <span className="text-emerald-400">9,215</span> active runtimes
                 · region: sin1 · 99.99% uptime
               </div>
             </motion.div>
 
-            <div className="mt-4 flex flex-wrap gap-2 text-[11px] text-white/60">
+            <div className="mt-4 flex flex-wrap gap-2 text-[11px] text-white/50">
               {[
                 "Stripe",
                 "Lemon Squeezy",
@@ -174,7 +174,7 @@ export function DeepDive() {
               ].map((s) => (
                 <span
                   key={s}
-                  className="rounded-md border border-white/10 bg-white/[0.04] px-2 py-1 font-mono"
+                  className="rounded-lg border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 font-mono transition-colors hover:border-white/[0.15] hover:text-white/70"
                 >
                   {s}
                 </span>

@@ -108,10 +108,10 @@ function CellView({ value, highlight }: { value: Cell; highlight?: boolean }) {
     return (
       <span
         className={cn(
-          "inline-flex h-7 w-7 items-center justify-center rounded-md border",
+          "inline-flex h-7 w-7 items-center justify-center rounded-lg border",
           highlight
-            ? "border-tint-indigo bg-tint-indigo text-indigo-600"
-            : "border-border bg-card text-emerald-500"
+            ? "border-indigo-200/80 bg-tint-indigo text-indigo-600"
+            : "border-border/50 bg-card text-emerald-500"
         )}
       >
         <Check className="h-3.5 w-3.5" />
@@ -120,14 +120,14 @@ function CellView({ value, highlight }: { value: Cell; highlight?: boolean }) {
   }
   if (value === "no") {
     return (
-      <span className="inline-flex h-7 w-7 items-center justify-center rounded-md border bg-card text-muted-foreground/50">
+      <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg border border-border/50 bg-card text-muted-foreground/30">
         <Minus className="h-3.5 w-3.5" />
       </span>
     );
   }
   if (value === "partial") {
     return (
-      <span className="inline-flex items-center rounded-md border bg-card px-2 py-1 text-[10px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+      <span className="inline-flex items-center rounded-lg border border-border/50 bg-card px-2 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-muted-foreground/70">
         Partial
       </span>
     );
@@ -135,10 +135,10 @@ function CellView({ value, highlight }: { value: Cell; highlight?: boolean }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-md border px-2.5 py-1 text-[11px] font-semibold",
+        "inline-flex items-center rounded-lg border px-2.5 py-1 text-[11px] font-semibold",
         highlight
-          ? "border-tint-indigo bg-tint-indigo text-indigo-600"
-          : "border-border bg-card text-foreground"
+          ? "border-indigo-200/80 bg-tint-indigo text-indigo-600"
+          : "border-border/50 bg-card text-foreground"
       )}
     >
       {value}
@@ -148,15 +148,15 @@ function CellView({ value, highlight }: { value: Cell; highlight?: boolean }) {
 
 export function Compare() {
   return (
-    <section id="compare" className="container mt-24 md:mt-32 scroll-mt-24">
-      <div className="mb-10 max-w-3xl">
+    <section id="compare" className="container scroll-mt-24 py-24 md:py-32">
+      <div className="mb-12 max-w-3xl">
         <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
           Why teskel
         </p>
-        <h2 className="mt-3 font-display text-3xl font-semibold tracking-[-0.025em] text-balance sm:text-4xl lg:text-[44px]">
+        <h2 className="mt-4 font-display text-[30px] font-semibold tracking-[-0.025em] text-gradient text-balance sm:text-[38px] lg:text-[44px]">
           One platform for what used to take four.
         </h2>
-        <p className="mt-4 max-w-2xl text-pretty text-muted-foreground">
+        <p className="mt-5 max-w-2xl text-[15px] leading-relaxed text-pretty text-muted-foreground">
           Linktree gave you links. Gumroad gave you a checkout. Patreon gave you
           recurring. Character.AI gave you a persona. Teskel gives you all four
           — plus the ability to ship real, runnable software.
@@ -164,17 +164,17 @@ export function Compare() {
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="relative overflow-hidden rounded-2xl border bg-card shadow-card"
+        className="relative overflow-hidden rounded-2xl border border-border/50 bg-card/50 shadow-premium"
       >
-        <span aria-hidden className="pointer-events-none absolute inset-0 mesh-soft opacity-90" />
+        <span aria-hidden className="pointer-events-none absolute inset-0 mesh-soft opacity-80" />
         <div className="relative overflow-x-auto">
           <table className="w-full min-w-[820px] border-collapse text-left">
             <thead>
-              <tr className="border-b bg-background/60">
+              <tr className="border-b border-border/50 bg-background/40">
                 <th className="w-[40%] px-5 py-4 text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
                   Capability
                 </th>
@@ -185,7 +185,7 @@ export function Compare() {
                       "px-3 py-4 text-center text-[12px] font-semibold",
                       c.highlight
                         ? "text-indigo-600"
-                        : "text-muted-foreground"
+                        : "text-muted-foreground/70"
                     )}
                   >
                     <div className="inline-flex items-center gap-1.5">
@@ -208,8 +208,8 @@ export function Compare() {
                 <tr
                   key={r.feature}
                   className={cn(
-                    "border-b last:border-0 transition-colors hover:bg-background/60",
-                    i % 2 === 0 ? "bg-transparent" : "bg-background/30"
+                    "border-b border-border/40 last:border-0 transition-colors hover:bg-background/50",
+                    i % 2 === 0 ? "bg-transparent" : "bg-background/20"
                   )}
                 >
                   <td className="px-5 py-4">
@@ -217,7 +217,7 @@ export function Compare() {
                       {r.feature}
                     </div>
                     {r.detail && (
-                      <div className="mt-0.5 text-[12px] text-muted-foreground">
+                      <div className="mt-0.5 text-[12px] text-muted-foreground/70">
                         {r.detail}
                       </div>
                     )}
@@ -234,7 +234,7 @@ export function Compare() {
         </div>
       </motion.div>
 
-      <p className="mt-5 text-[12px] text-muted-foreground">
+      <p className="mt-5 text-[12px] text-muted-foreground/60">
         Comparison is based on publicly listed features as of 2026. Logos &amp;
         names belong to their respective owners.
       </p>

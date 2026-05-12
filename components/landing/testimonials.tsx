@@ -65,16 +65,16 @@ const accentByHandle: Record<string, string> = {
   "ravi.ai": "text-indigo-500"
 };
 
-function Card({ t }: { t: (typeof items)[number] }) {
+function TestimonialCard({ t }: { t: (typeof items)[number] }) {
   const accent = accentByHandle[t.handle] ?? "text-foreground";
   return (
-    <figure className="w-[340px] shrink-0 rounded-2xl border bg-card p-5 transition-colors hover:border-foreground/30 sm:w-[400px]">
-      <Quote className={`h-4 w-4 ${accent}`} />
-      <blockquote className="mt-3 text-[14px] leading-relaxed text-foreground">
+    <figure className="w-[340px] shrink-0 rounded-2xl border border-border/50 bg-card/50 p-5 transition-all duration-300 card-hover sm:w-[400px]">
+      <Quote className={`h-4 w-4 ${accent} opacity-60`} />
+      <blockquote className="mt-3 text-[14px] leading-relaxed text-foreground/90">
         &ldquo;{t.quote}&rdquo;
       </blockquote>
       <figcaption className="mt-5 flex items-center gap-3">
-        <Avatar className="h-9 w-9 ring-1 ring-border">
+        <Avatar className="h-9 w-9 ring-1 ring-border/50">
           <AvatarImage src={t.avatar} />
           <AvatarFallback>{t.name.slice(0, 2)}</AvatarFallback>
         </Avatar>
@@ -92,18 +92,18 @@ export function Testimonials() {
   const rowB = [...items.slice().reverse(), ...items.slice().reverse()];
 
   return (
-    <section className="mt-24 md:mt-32">
+    <section className="py-24 md:py-32">
       <div className="container">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
             Loved by builders
           </p>
-          <h2 className="mt-3 font-display text-[32px] font-semibold tracking-[-0.02em] sm:text-[44px]">
+          <h2 className="mt-4 font-display text-[32px] font-semibold tracking-[-0.025em] text-gradient sm:text-[44px]">
             What creators say
           </h2>
         </Reveal>
 
-        <Reveal className="mt-7 flex items-center justify-center gap-3" delay={0.1}>
+        <Reveal className="mt-8 flex items-center justify-center gap-3" delay={0.1}>
           <div className="flex -space-x-2">
             {items.slice(0, 6).map((t) => (
               <Avatar
@@ -124,18 +124,18 @@ export function Testimonials() {
         </Reveal>
       </div>
 
-      <div className="pause-on-hover mt-12 space-y-3 mask-edges-x">
+      <div className="pause-on-hover mt-14 space-y-3 mask-edges-x">
         <div className="relative overflow-hidden">
           <div className="marquee flex w-max gap-3">
             {rowA.map((t, i) => (
-              <Card key={`a-${t.handle}-${i}`} t={t} />
+              <TestimonialCard key={`a-${t.handle}-${i}`} t={t} />
             ))}
           </div>
         </div>
         <div className="relative overflow-hidden">
           <div className="marquee-reverse flex w-max gap-3">
             {rowB.map((t, i) => (
-              <Card key={`b-${t.handle}-${i}`} t={t} />
+              <TestimonialCard key={`b-${t.handle}-${i}`} t={t} />
             ))}
           </div>
         </div>

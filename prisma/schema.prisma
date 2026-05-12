@@ -1,0 +1,221 @@
+// Teskel — Prisma Schema
+// Full data model for AI Identity Commerce
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Creator (the core entity) ─────────────────────────
+
+model Creator {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  name      String
+  avatar    String   @default("")
+  cover     String   @default("")
+  tagline   String   @default("")
+  bio       String   @default("")
+  location  String   @default("")
+  niche     String   @default("")
+  followers Int      @default(0)
+  rating    Float    @default(0)
+  verified  Boolean  @default(false)
+
+  // Auth link
+  clerkUserId String? @unique
+
+  // Persona configuration
+  personaTone      String   @default("")
+  personaExpertise String[] @default([])
+  personaGreeting  String   @default("")
+  personaSuggestions String[] @default([])
+
+  // Socials (stored as JSON array)
+  socials Json @default("[]")
+
+  // Stats (denormalized for fast reads)
+  statsProducts    Int @default(0)
+  statsCustomers   Int @default(0)
+  statsDeployments Int @default(0)
+  statsRevenue     Int @default(0)
+
+  // Relations
+  products         Product[]
+  memberships      Membership[]
+  knowledgeSources KnowledgeSource[]
+  chatSessions     ChatSession[]
+
+  // Stripe connect
+  stripeAccountId   String?
+  stripeOnboarded   Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("creators")
+}
+
+// ─── Product ───────────────────────────────────────────
+
+model Product {
+  id          String  @id @default(cuid())
+  slug        String
+  title       String
+  emoji       String  @default("")
+  kind        String  // ebook, prompt-pack, ai-workflow, template, mini-saas, membership, dataset, automation
+  description String  @default("")
+  price       Int     @default(0) // in cents
+  currency    String  @default("USD")
+  thumbnail   String  @default("")
+  badges      String[] @default([])
+  runtime     String  @default("static") // static | executable
+  liveUrl     String  @default("")
+  rating      Float   @default(0)
+  sales       Int     @default(0)
+  published   Boolean @default(true)
+
+  // Dokploy runtime (for executable products)
+  dokployProjectId String?
+  dokployServiceId String?
+
+  // Stripe
+  stripePriceId String?
+
+  creator   Creator @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId String
+
+  orders Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([creatorId, slug])
+  @@map("products")
+}
+
+// ─── Membership ────────────────────────────────────────
+
+model Membership {
+  id           String  @id @default(cuid())
+  tier         String
+  priceMonthly Int     @default(0) // in cents
+  description  String  @default("")
+  perks        String[] @default([])
+  highlight    Boolean @default(false)
+
+  // Stripe
+  stripePriceId String?
+
+  creator   Creator @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId String
+
+  subscriptions Subscription[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("memberships")
+}
+
+// ─── Order ─────────────────────────────────────────────
+
+model Order {
+  id              String @id @default(cuid())
+  amount          Int    // in cents
+  currency        String @default("USD")
+  status          String @default("pending") // pending, completed, refunded
+  paymentProvider String @default("stripe") // stripe, lemon, polar
+  providerOrderId String @default("")
+  buyerEmail      String @default("")
+  buyerName       String @default("")
+  buyerClerkId    String?
+
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("orders")
+}
+
+// ─── Subscription ──────────────────────────────────────
+
+model Subscription {
+  id              String @id @default(cuid())
+  status          String @default("active") // active, cancelled, past_due, trialing
+  paymentProvider String @default("stripe")
+  providerSubId   String @default("")
+  subscriberEmail String @default("")
+  subscriberName  String @default("")
+  subscriberClerkId String?
+
+  membership   Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  membershipId String
+
+  currentPeriodEnd DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("subscriptions")
+}
+
+// ─── Chat Session ──────────────────────────────────────
+
+model ChatSession {
+  id        String @id @default(cuid())
+  visitorIp String @default("")
+  visitorClerkId String?
+  messageCount Int @default(0)
+
+  creator   Creator @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId String
+
+  messages ChatMessage[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("chat_sessions")
+}
+
+model ChatMessage {
+  id      String @id @default(cuid())
+  role    String // user | assistant
+  content String
+
+  session   ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sessionId String
+
+  createdAt DateTime @default(now())
+
+  @@map("chat_messages")
+}
+
+// ─── Knowledge Source ──────────────────────────────────
+
+model KnowledgeSource {
+  id      String @id @default(cuid())
+  kind    String // file, url, text, notion
+  name    String @default("")
+  content String @default("") // raw text or URL
+  status  String @default("pending") // pending, indexed, error
+
+  // Vector store reference
+  qdrantCollectionId String?
+  chunkCount         Int @default(0)
+
+  creator   Creator @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  creatorId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("knowledge_sources")
+}

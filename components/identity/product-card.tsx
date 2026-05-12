@@ -1,9 +1,13 @@
+"use client";
+
+import * as React from "react";
 import {
   ArrowUpRight,
   Cpu,
   Download,
   ShoppingCart,
-  Star
+  Star,
+  Loader2
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -23,7 +27,39 @@ const kindLabel: Record<Product["kind"], string> = {
 };
 
 export function ProductCard({ product }: { product: Product }) {
+  const [isLoading, setIsLoading] = React.useState(false);
   const isLive = product.runtime === "executable";
+
+  const handleCheckout = async () => {
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "product",
+          productId: product.id,
+          productName: product.title,
+          priceInCents: product.price * 100
+        })
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to create checkout session");
+      }
+
+      const { url } = await res.json();
+      if (url) {
+        window.location.href = url;
+      }
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Checkout is currently unavailable.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border bg-card transition-all hover:-translate-y-0.5 hover:shadow-card">
       <div className="relative flex h-28 items-center justify-center border-b bg-secondary">
@@ -81,8 +117,12 @@ export function ProductCard({ product }: { product: Product }) {
           )}
         </div>
         <div className="mt-4 flex items-center gap-2">
-          <Button size="sm" className="flex-1">
-            <ShoppingCart className="h-3.5 w-3.5" />
+          <Button size="sm" className="flex-1" onClick={handleCheckout} disabled={isLoading}>
+            {isLoading ? (
+              <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
+            ) : (
+              <ShoppingCart className="mr-2 h-3.5 w-3.5" />
+            )}
             {isLive ? "Get access" : "Buy now"}
           </Button>
           <Button size="icon" variant="outline" aria-label="Preview">

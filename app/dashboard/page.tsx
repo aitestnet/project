@@ -1,74 +1,107 @@
 import Link from "next/link";
 import {
-  Activity,
   ArrowRight,
+  BadgeCheck,
   Bot,
-  Cpu,
-  DollarSign,
-  Eye,
+  Fingerprint,
+  Globe2,
+  KeyRound,
   MessageSquare,
-  Plus,
+  ShieldCheck,
+  ShoppingBag,
   Users
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { SectionHeader } from "@/components/dashboard/section-header";
 import { StatCard } from "@/components/dashboard/stat-card";
-import { Sparkline } from "@/components/dashboard/sparkline";
-import { creators, dashboardProducts } from "@/lib/data";
-import { formatCurrency, formatCompactNumber, initials } from "@/lib/utils";
+import { db } from "@/lib/db";
+import { mapCreator } from "@/lib/data-mapper";
 
-const revenueSeries = [11, 14, 12, 18, 20, 17, 23, 26, 24, 31, 29, 34, 38, 36];
+const fallbackCreator = {
+  name: "Yogi Pradana",
+  username: "yogi",
+  productCount: 4
+};
 
-const recentChats = [
-  {
-    name: "Sasha M.",
-    seed: "Sasha",
-    snippet: "How much is the AI SEO Tool? Can it handle 50 sites?",
-    time: "2m"
-  },
-  {
-    name: "Devansh P.",
-    seed: "Devansh",
-    snippet: "Recommend a product for a solo founder shipping AI tools.",
-    time: "12m"
-  },
-  {
-    name: "Lia R.",
-    seed: "Lia",
-    snippet: "Can I get the founder membership annually?",
-    time: "1h"
-  },
-  {
-    name: "Noor A.",
-    seed: "NoorA",
-    snippet: "Does the resume builder support PDF export with my branding?",
-    time: "3h"
-  }
+const proofItems = [
+  { label: "Public identity", status: "Live", score: 100 },
+  { label: "Social proof", status: "Connected", score: 84 },
+  { label: "Work samples", status: "Needs 2 more", score: 58 },
+  { label: "Credential vault", status: "Draft", score: 32 }
 ];
 
-export default function DashboardPage() {
-  const creator = creators.yogi;
+const identityLoop = [
+  "Publish verified AI identity",
+  "Train persona with knowledge",
+  "Qualify leads and recommend offers",
+  "Let agents act with approval logs"
+];
+
+const agentPermissions = [
+  "Answer public questions",
+  "Draft lead replies",
+  "Recommend offers",
+  "Request human approval before sending"
+];
+
+export default async function DashboardPage() {
+  let clerkUserId: string | null = null;
+  try {
+    const { auth } = await import("@clerk/nextjs/server");
+    const session = await auth();
+    clerkUserId = session.userId;
+  } catch (e) {}
+
+  let creator = fallbackCreator;
+  try {
+    let dbCreator = null;
+    if (clerkUserId) {
+      dbCreator = await db.creator.findUnique({
+        where: { clerkUserId },
+        include: { products: true }
+      });
+    }
+
+    if (!dbCreator) {
+      dbCreator = await db.creator.findFirst({
+        where: { username: "yogi" },
+        include: { products: true }
+      });
+    }
+
+    if (dbCreator) {
+      const mappedCreator = mapCreator(dbCreator);
+      creator = {
+        name: mappedCreator.name,
+        username: mappedCreator.username,
+        productCount: dbCreator.products.length
+      };
+    }
+  } catch (error) {
+    creator = fallbackCreator;
+  }
 
   return (
     <div className="space-y-6">
       <SectionHeader
-        title={`Welcome back, ${creator.name.split(" ")[0]} 👋`}
-        description="Your AI twin handled 87 conversations this week and closed 14 sales."
+        title={`${creator.name}'s AI identity`}
+        description="Build one trusted global profile for your persona, proof, products, audience, and future agents."
         actions={
           <>
             <Button asChild variant="outline">
-              <Link href="/yogi">
-                <Eye className="h-3.5 w-3.5" />
-                Preview
+              <Link href={`/${creator.username}`}>
+                <Globe2 className="h-3.5 w-3.5" />
+                Public identity
               </Link>
             </Button>
-            <Button>
-              <Plus className="h-3.5 w-3.5" />
-              New product
+            <Button asChild>
+              <Link href="/dashboard/proof">
+                <ShieldCheck className="h-3.5 w-3.5" />
+                Improve trust
+              </Link>
             </Button>
           </>
         }
@@ -76,183 +109,133 @@ export default function DashboardPage() {
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
-          label="Revenue (30d)"
-          value={formatCurrency(18240)}
-          delta="+24.6%"
-          icon={DollarSign}
+          label="Trust score"
+          value="76/100"
+          delta="+12 this month"
+          icon={Fingerprint}
         />
         <StatCard
-          label="New customers"
-          value="412"
-          delta="+12.1%"
+          label="Persona readiness"
+          value="82%"
+          delta="Knowledge trained"
+          icon={Bot}
+        />
+        <StatCard
+          label="Qualified leads"
+          value="418"
+          delta="+24%"
           icon={Users}
         />
         <StatCard
-          label="AI chats"
-          value="3.2k"
-          delta="+8.4%"
-          icon={MessageSquare}
-        />
-        <StatCard
-          label="Live runtimes"
-          value="5/10"
-          delta="+1 this week"
-          icon={Cpu}
+          label="Published offers"
+          value={`${creator.productCount}`}
+          delta="Commerce ready"
+          icon={ShoppingBag}
         />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-12">
-        <div className="rounded-2xl border bg-card p-5 lg:col-span-8">
-          <div className="flex items-start justify-between">
+        <section className="rounded-2xl border bg-card p-5 lg:col-span-7">
+          <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
             <div>
+              <Badge variant="success">
+                <BadgeCheck className="mr-1 h-3 w-3" />
+                Identity live
+              </Badge>
+              <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight">
+                {creator.username}.ai should become the trust page people send before a call.
+              </h2>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+                Teskel is strongest when it proves who you are, lets your AI persona
+                explain your value, and turns that trust into products, leads, and
+                permissioned agent actions.
+              </p>
+            </div>
+            <div className="rounded-xl border bg-secondary/40 p-4 text-sm">
               <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-                Revenue
+                Global positioning
               </p>
-              <p className="mt-1 font-display text-2xl font-semibold tracking-[-0.02em]">
-                {formatCurrency(184320)}
-              </p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Lifetime · $5.8M+ flowing through Teskel creators
-              </p>
-            </div>
-            <Badge variant="outline" className="rounded-full">
-              <Activity className="mr-1 h-3 w-3" />
-              On track
-            </Badge>
-          </div>
-          <Sparkline data={revenueSeries} />
-          <div className="mt-2 grid grid-cols-3 gap-2 text-center text-xs text-muted-foreground">
-            <div>
-              <p className="text-foreground font-semibold">$18.2k</p>
-              <p>This month</p>
-            </div>
-            <div>
-              <p className="text-foreground font-semibold">$74.1k</p>
-              <p>This year</p>
-            </div>
-            <div>
-              <p className="text-foreground font-semibold">$184k</p>
-              <p>Lifetime</p>
+              <p className="mt-2 font-medium">AI-native identity for work and commerce.</p>
             </div>
           </div>
-        </div>
-
-        <div className="space-y-3 rounded-2xl border bg-card p-5 lg:col-span-4">
-          <div className="flex items-center justify-between">
-            <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
-              AI persona health
-            </p>
-            <Bot className="h-4 w-4 text-foreground" />
-          </div>
-          <div>
-            <div className="flex items-center justify-between text-sm">
-              <span>Knowledge coverage</span>
-              <span className="text-muted-foreground">82%</span>
-            </div>
-            <Progress className="mt-1" value={82} />
-          </div>
-          <div>
-            <div className="flex items-center justify-between text-sm">
-              <span>Tone consistency</span>
-              <span className="text-muted-foreground">94%</span>
-            </div>
-            <Progress className="mt-1" value={94} />
-          </div>
-          <div>
-            <div className="flex items-center justify-between text-sm">
-              <span>Conversion guidance</span>
-              <span className="text-muted-foreground">67%</span>
-            </div>
-            <Progress className="mt-1" value={67} />
-          </div>
-          <Button variant="outline" className="mt-2 w-full" asChild>
-            <Link href="/dashboard/persona">
-              Tune AI persona <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="grid gap-6 lg:grid-cols-12">
-        <div className="rounded-2xl border bg-card p-5 lg:col-span-7">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-semibold">Top products</p>
-              <p className="text-xs text-muted-foreground">
-                Sorted by 30-day revenue
-              </p>
-            </div>
-            <Button variant="outline" size="sm" asChild>
-              <Link href="/dashboard/products">
-                View all <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </Button>
-          </div>
-          <div className="mt-4 divide-y">
-            {dashboardProducts.slice(0, 5).map((p) => (
-              <div
-                key={p.id}
-                className="flex items-center justify-between py-3"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-lg border bg-secondary text-lg">
-                    {p.emoji}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-medium">{p.title}</p>
-                    <p className="truncate text-xs text-muted-foreground">
-                      {p.runtime === "executable" ? "Mini SaaS · " : ""}
-                      {formatCompactNumber(p.sales)} sales
-                    </p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm font-semibold">
-                    {formatCurrency(p.price * Math.min(p.sales, 80))}
-                  </p>
-                  <p className="text-xs text-emerald-600">
-                    +{((p.rating - 4) * 30).toFixed(0)}% vs last week
-                  </p>
-                </div>
+          <div className="mt-5 grid gap-3 md:grid-cols-4">
+            {identityLoop.map((item, index) => (
+              <div key={item} className="rounded-xl border bg-background p-4">
+                <span className="text-xs font-semibold text-muted-foreground">
+                  0{index + 1}
+                </span>
+                <p className="mt-2 text-sm font-medium">{item}</p>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        <div className="rounded-2xl border bg-card p-5 lg:col-span-5">
+        <section className="rounded-2xl border bg-card p-5 lg:col-span-5">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-semibold">Recent AI chats</p>
+              <p className="text-sm font-semibold">Proof graph</p>
               <p className="text-xs text-muted-foreground">
-                Your AI twin handled these without you.
+                Signals that make the public identity believable.
               </p>
             </div>
-            <Badge variant="outline">87 this week</Badge>
+            <Badge variant="outline">4 layers</Badge>
           </div>
-          <ul className="mt-4 space-y-3">
-            {recentChats.map((c) => (
-              <li key={c.name} className="flex items-start gap-3">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage
-                    src={`https://api.dicebear.com/9.x/notionists/svg?seed=${c.seed}&backgroundColor=f5f5f5`}
-                  />
-                  <AvatarFallback>{initials(c.name)}</AvatarFallback>
-                </Avatar>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between">
-                    <p className="truncate text-sm font-medium">{c.name}</p>
-                    <span className="text-[11px] text-muted-foreground">
-                      {c.time}
-                    </span>
-                  </div>
-                  <p className="truncate text-xs text-muted-foreground">
-                    {c.snippet}
-                  </p>
+          <div className="mt-4 space-y-4">
+            {proofItems.map((item) => (
+              <div key={item.label}>
+                <div className="mb-1 flex items-center justify-between text-sm">
+                  <span>{item.label}</span>
+                  <span className="text-xs text-muted-foreground">{item.status}</span>
                 </div>
-              </li>
+                <Progress value={item.score} />
+              </div>
+            ))}
+          </div>
+          <Button variant="outline" className="mt-5 w-full" asChild>
+            <Link href="/dashboard/proof">
+              Open proof center <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </Button>
+        </section>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-12">
+        <section className="rounded-2xl border bg-card p-5 lg:col-span-4">
+          <Bot className="h-5 w-5" />
+          <h3 className="mt-3 font-semibold">AI persona</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Your public AI should answer like you, qualify opportunities, and route
+            people to the right offer.
+          </p>
+          <Button variant="outline" className="mt-4" asChild>
+            <Link href="/dashboard/persona">Tune persona</Link>
+          </Button>
+        </section>
+
+        <section className="rounded-2xl border bg-card p-5 lg:col-span-4">
+          <MessageSquare className="h-5 w-5" />
+          <h3 className="mt-3 font-semibold">Audience inbox</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Leads, buyers, and chat history become identity data, not scattered
+            messages across platforms.
+          </p>
+          <Button variant="outline" className="mt-4" asChild>
+            <Link href="/dashboard/audience">Review leads</Link>
+          </Button>
+        </section>
+
+        <section className="rounded-2xl border bg-card p-5 lg:col-span-4">
+          <KeyRound className="h-5 w-5" />
+          <h3 className="mt-3 font-semibold">Agent permissions</h3>
+          <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+            {agentPermissions.map((permission) => (
+              <li key={permission}>- {permission}</li>
             ))}
           </ul>
-        </div>
+          <Button variant="outline" className="mt-4" asChild>
+            <Link href="/dashboard/agents">Manage agents</Link>
+          </Button>
+        </section>
       </div>
     </div>
   );

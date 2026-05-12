@@ -9,16 +9,21 @@ import { ProductCard } from "@/components/identity/product-card";
 import { MembershipCard } from "@/components/identity/membership-card";
 import { PersonaChat } from "@/components/chat/persona-chat";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { creators, memberships, products } from "@/lib/data";
+import { db } from "@/lib/db";
+import { mapCreator, mapMembership, mapProduct } from "@/lib/data-mapper";
 
 type Params = { params: { username: string } };
+type StaticCreatorParam = { username: string };
 
-export function generateStaticParams() {
-  return Object.keys(creators).map((username) => ({ username }));
+export async function generateStaticParams() {
+  const creators = await db.creator.findMany({ select: { username: true } });
+  return creators.map((c: StaticCreatorParam) => ({ username: c.username }));
 }
 
-export function generateMetadata({ params }: Params): Metadata {
-  const creator = creators[params.username];
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const creator = await db.creator.findUnique({
+    where: { username: params.username }
+  });
   if (!creator) return { title: `${params.username}.ai` };
   return {
     title: `${creator.name} (${creator.username}.ai)`,
@@ -26,12 +31,17 @@ export function generateMetadata({ params }: Params): Metadata {
   };
 }
 
-export default function IdentityPage({ params }: Params) {
-  const creator = creators[params.username];
-  if (!creator) notFound();
+export default async function IdentityPage({ params }: Params) {
+  const data = await db.creator.findUnique({
+    where: { username: params.username },
+    include: { products: true, memberships: true }
+  });
 
-  const items = products[creator.username] ?? [];
-  const memb = memberships[creator.username] ?? [];
+  if (!data) notFound();
+
+  const creator = mapCreator(data);
+  const items = data.products.map(mapProduct);
+  const memb = data.memberships.map(mapMembership);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -56,7 +66,7 @@ export default function IdentityPage({ params }: Params) {
 
               <TabsContent value="products" className="mt-6">
                 <div className="grid gap-4 sm:grid-cols-2">
-                  {items.map((p) => (
+                  {items.map((p: ReturnType<typeof mapProduct>) => (
                     <ProductCard key={p.id} product={p} />
                   ))}
                 </div>
@@ -64,7 +74,7 @@ export default function IdentityPage({ params }: Params) {
 
               <TabsContent value="memberships" className="mt-6">
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {memb.map((t) => (
+                  {memb.map((t: ReturnType<typeof mapMembership>) => (
                     <MembershipCard key={t.id} tier={t} />
                   ))}
                 </div>

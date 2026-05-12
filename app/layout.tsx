@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Sora } from "next/font/google";
 
 import "./globals.css";
+import { ClerkWrapper } from "@/components/site/clerk-wrapper";
+import { PostHogProvider } from "@/components/providers/posthog-provider";
 
 const sans = Inter({
   subsets: ["latin"],
@@ -51,8 +53,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${sans.variable} ${display.variable}`}>
-      <body className="min-h-screen bg-background text-foreground antialiased">
-        {children}
+      <body className="grain-overlay min-h-screen bg-background text-foreground antialiased">
+        <PostHogProvider>
+          <ClerkWrapper>{children}</ClerkWrapper>
+        </PostHogProvider>
       </body>
     </html>
   );

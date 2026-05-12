@@ -42,7 +42,7 @@ const personas: Persona[] = [
     tint: "bg-tint-indigo",
     text: "text-indigo-500",
     dot: "bg-indigo-500 text-indigo-500",
-    ringHover: "group-hover:ring-indigo-200"
+    ringHover: "group-hover:ring-indigo-200/80"
   },
   {
     role: "Designer",
@@ -54,7 +54,7 @@ const personas: Persona[] = [
     tint: "bg-tint-violet",
     text: "text-violet-500",
     dot: "bg-violet-500 text-violet-500",
-    ringHover: "group-hover:ring-violet-200"
+    ringHover: "group-hover:ring-violet-200/80"
   },
   {
     role: "Educator",
@@ -66,7 +66,7 @@ const personas: Persona[] = [
     tint: "bg-tint-emerald",
     text: "text-emerald-500",
     dot: "bg-emerald-500 text-emerald-500",
-    ringHover: "group-hover:ring-emerald-200"
+    ringHover: "group-hover:ring-emerald-200/80"
   },
   {
     role: "Indie hacker",
@@ -78,7 +78,7 @@ const personas: Persona[] = [
     tint: "bg-tint-amber",
     text: "text-amber-500",
     dot: "bg-amber-500 text-amber-500",
-    ringHover: "group-hover:ring-amber-200"
+    ringHover: "group-hover:ring-amber-200/80"
   },
   {
     role: "Coach",
@@ -90,7 +90,7 @@ const personas: Persona[] = [
     tint: "bg-tint-indigo",
     text: "text-indigo-500",
     dot: "bg-indigo-500 text-indigo-500",
-    ringHover: "group-hover:ring-indigo-200"
+    ringHover: "group-hover:ring-indigo-200/80"
   },
   {
     role: "Musician",
@@ -102,44 +102,44 @@ const personas: Persona[] = [
     tint: "bg-tint-violet",
     text: "text-violet-500",
     dot: "bg-violet-500 text-violet-500",
-    ringHover: "group-hover:ring-violet-200"
+    ringHover: "group-hover:ring-violet-200/80"
   }
 ];
 
 export function UseCases() {
   return (
-    <section className="container mt-24 md:mt-32">
+    <section className="container py-24 md:py-32">
       <Reveal className="mx-auto max-w-2xl text-center">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
           Built for every kind of creator
         </p>
-        <h2 className="mt-3 font-display text-[32px] font-semibold tracking-[-0.02em] sm:text-[44px]">
+        <h2 className="mt-4 font-display text-[32px] font-semibold tracking-[-0.025em] text-gradient sm:text-[44px]">
           One identity. Infinite shapes.
         </h2>
-        <p className="mt-4 text-[15px] text-muted-foreground">
+        <p className="mt-5 text-[15px] leading-relaxed text-muted-foreground">
           Teskel adapts to your craft — whether you ship software, sell design,
           teach, or perform.
         </p>
       </Reveal>
 
-      <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {personas.map((p, i) => (
           <motion.article
             key={p.handle}
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{
               duration: 0.5,
-              delay: i * 0.05,
+              delay: i * 0.06,
               ease: [0.22, 1, 0.36, 1]
             }}
-            className="group relative overflow-hidden rounded-2xl border bg-card p-5 transition-all hover:-translate-y-0.5 hover:shadow-card"
+            className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/50 p-5 transition-all duration-300 card-hover"
           >
             <span
               aria-hidden
               className={cn(
-                "pointer-events-none absolute -top-16 -right-16 h-40 w-40 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-80",
+                "pointer-events-none absolute -top-20 -right-20 h-44 w-44 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-60",
                 p.tint
               )}
             />
@@ -165,7 +165,7 @@ export function UseCases() {
               </div>
               <span
                 className={cn(
-                  "flex h-7 w-7 items-center justify-center rounded-md border bg-background",
+                  "flex h-8 w-8 items-center justify-center rounded-lg border border-border/50 bg-background",
                   p.text
                 )}
               >
@@ -182,7 +182,7 @@ export function UseCases() {
                 <Badge
                   key={pr}
                   variant="outline"
-                  className="rounded-md text-[10.5px] font-medium"
+                  className="rounded-md border-border/50 text-[10.5px] font-medium"
                 >
                   {pr}
                 </Badge>

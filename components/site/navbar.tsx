@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, ArrowUpRight, Search } from "lucide-react";
+import { Menu, ArrowUpRight, X } from "lucide-react";
 import * as React from "react";
-import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/site/logo";
@@ -19,115 +19,128 @@ const links = [
 
 export function Navbar() {
   const pathname = usePathname();
-  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
 
   React.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 16);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  React.useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        router.push("/discover");
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [router]);
-
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-40 w-full transition-all",
-        scrolled
-          ? "border-b border-border/80 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/70 shadow-soft"
-          : "border-b border-transparent bg-background"
-      )}
-    >
+    <header className="sticky top-0 z-50 w-full">
+      {/* Floating pill container */}
       <div
         className={cn(
-          "container flex items-center justify-between gap-4 transition-all",
-          scrolled ? "h-12" : "h-14"
+          "mx-auto transition-all duration-500",
+          scrolled
+            ? "max-w-3xl px-2 pt-3"
+            : "max-w-full px-0 pt-0"
         )}
       >
-        <div className="flex items-center gap-8">
-          <Logo />
-          <nav className="hidden items-center gap-6 md:flex">
+        <nav
+          className={cn(
+            "flex items-center justify-between transition-all duration-500",
+            scrolled
+              ? "h-11 rounded-full border border-border/60 bg-background/75 px-1.5 shadow-premium backdrop-blur-xl backdrop-saturate-150"
+              : "h-14 border-b border-transparent bg-background px-6"
+          )}
+        >
+          <div className="flex items-center gap-1">
+            <div className={cn(
+              "transition-all duration-500",
+              scrolled ? "pl-2.5" : "pl-0"
+            )}>
+              <Logo showWordmark={!scrolled} />
+            </div>
+          </div>
+
+          {/* Desktop nav */}
+          <div className="hidden items-center gap-0.5 md:flex">
             {links.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 className={cn(
-                  "text-[13px] text-muted-foreground transition-colors hover:text-foreground",
-                  pathname === l.href && "text-foreground"
+                  "relative rounded-full px-3 py-1.5 text-[13px] font-medium transition-colors",
+                  pathname === l.href
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
                 )}
               >
                 {l.label}
               </Link>
             ))}
-          </nav>
-        </div>
-        <div className="hidden items-center gap-2 md:flex">
-          <button
-            onClick={() => router.push("/discover")}
-            className="inline-flex h-8 items-center gap-2 rounded-md border bg-card px-2.5 text-[12px] text-muted-foreground transition-colors hover:text-foreground"
-            aria-label="Open discover"
-          >
-            <Search className="h-3.5 w-3.5" />
-            <span className="hidden lg:inline">Search creators</span>
-            <span className="ml-1 hidden items-center gap-0.5 lg:inline-flex">
-              <span className="kbd">⌘</span>
-              <span className="kbd">K</span>
-            </span>
-          </button>
-          <Button asChild variant="ghost" size="sm">
-            <Link href="/sign-in">Sign in</Link>
-          </Button>
-          <Button asChild size="sm" className="group">
-            <Link href="/sign-up">
-              Claim your handle
-              <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </Link>
-          </Button>
-        </div>
-        <button
-          aria-label="Toggle menu"
-          onClick={() => setOpen((v) => !v)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border md:hidden"
-        >
-          <Menu className="h-4 w-4" />
-        </button>
-      </div>
-      {open && (
-        <div className="border-t bg-background md:hidden">
-          <div className="container flex flex-col gap-1 py-3">
-            {links.map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                onClick={() => setOpen(false)}
-                className="rounded-md px-3 py-2 text-sm hover:bg-accent"
-              >
-                {l.label}
-              </Link>
-            ))}
-            <div className="mt-2 flex gap-2">
-              <Button asChild size="sm" variant="outline" className="flex-1">
-                <Link href="/sign-in">Sign in</Link>
-              </Button>
-              <Button asChild size="sm" className="flex-1">
-                <Link href="/sign-up">Claim handle</Link>
-              </Button>
-            </div>
           </div>
-        </div>
-      )}
+
+          {/* Desktop actions */}
+          <div className="hidden items-center gap-1.5 md:flex">
+            <Button asChild variant="ghost" size="sm" className={cn(
+              "h-8 rounded-full text-[13px] font-medium",
+              scrolled ? "px-3" : "px-3"
+            )}>
+              <Link href="/sign-in">Log in</Link>
+            </Button>
+            <Button asChild size="sm" className={cn(
+              "group h-8 rounded-full text-[13px] font-medium",
+              scrolled ? "px-3.5" : "px-4"
+            )}>
+              <Link href="/sign-up">
+                Get started
+                <ArrowUpRight className="ml-1 h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </Link>
+            </Button>
+          </div>
+
+          {/* Mobile toggle */}
+          <button
+            aria-label="Toggle menu"
+            onClick={() => setOpen((v) => !v)}
+            className={cn(
+              "inline-flex h-8 w-8 items-center justify-center rounded-full border md:hidden",
+              scrolled ? "border-border/60" : "border-border"
+            )}
+          >
+            {open ? <X className="h-3.5 w-3.5" /> : <Menu className="h-3.5 w-3.5" />}
+          </button>
+        </nav>
+      </div>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-x-0 top-full border-b bg-background/95 backdrop-blur-xl md:hidden"
+          >
+            <div className="container flex flex-col gap-1 py-4">
+              {links.map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-accent"
+                >
+                  {l.label}
+                </Link>
+              ))}
+              <div className="mt-3 flex gap-2">
+                <Button asChild size="sm" variant="outline" className="flex-1 rounded-full">
+                  <Link href="/sign-in">Log in</Link>
+                </Button>
+                <Button asChild size="sm" className="flex-1 rounded-full">
+                  <Link href="/sign-up">Get started</Link>
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

@@ -18,18 +18,18 @@ export function Pricing() {
   const [annual, setAnnual] = React.useState(true);
 
   return (
-    <section id="pricing" className="container mt-24 scroll-mt-24 md:mt-32">
+    <section id="pricing" className="container scroll-mt-24 py-24 md:py-32">
       <Reveal className="mx-auto max-w-2xl text-center">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted-foreground">
           Pricing
         </p>
-        <h2 className="mt-3 font-display text-[32px] font-semibold tracking-[-0.02em] sm:text-[44px]">
+        <h2 className="mt-4 font-display text-[32px] font-semibold tracking-[-0.025em] text-gradient sm:text-[44px]">
           Start free. Pay as you grow.
         </h2>
-        <p className="mt-4 text-[15px] text-muted-foreground">
+        <p className="mt-5 text-[15px] leading-relaxed text-muted-foreground">
           Flat, friendly pricing. We take 0% commission on your product sales.
         </p>
-        <div className="mt-6 inline-flex items-center rounded-full border bg-card p-1 text-sm">
+        <div className="mt-7 inline-flex items-center rounded-full border border-border/50 bg-card/50 p-1 text-sm backdrop-blur-sm">
           <button
             onClick={() => setAnnual(false)}
             className={cn(
@@ -70,7 +70,7 @@ export function Pricing() {
         </div>
       </Reveal>
 
-      <div className="mt-12 grid gap-3 md:grid-cols-3">
+      <div className="mt-14 grid gap-4 md:grid-cols-3">
         {pricingTiers.map((tier, i) => {
           const price =
             tier.price === 0
@@ -81,34 +81,34 @@ export function Pricing() {
           return (
             <motion.div
               key={tier.name}
-              initial={{ opacity: 0, y: 14 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, delay: i * 0.06, ease }}
+              transition={{ duration: 0.5, delay: i * 0.07, ease }}
             >
               <Card
                 className={cn(
-                  "relative flex h-full flex-col overflow-hidden transition-all hover:-translate-y-0.5 hover:shadow-card",
+                  "relative flex h-full flex-col overflow-hidden transition-all duration-300 card-hover border-border/50",
                   tier.highlight
-                    ? "shadow-elev border-tint-indigo"
-                    : ""
+                    ? "shadow-premium border-indigo-200/60"
+                    : "bg-card/50"
                 )}
               >
                 {tier.highlight && (
                   <>
                     <span
                       aria-hidden
-                      className="pointer-events-none absolute inset-0 mesh-soft opacity-90"
+                      className="pointer-events-none absolute inset-0 mesh-soft opacity-80"
                     />
                     <span
                       aria-hidden
-                      className="pointer-events-none absolute -top-24 -left-24 h-48 w-48 rounded-full bg-tint-indigo opacity-70 blur-3xl"
+                      className="pointer-events-none absolute -top-28 -left-28 h-56 w-56 rounded-full bg-tint-indigo opacity-50 blur-3xl"
                     />
                     <span
                       aria-hidden
-                      className="pointer-events-none absolute -bottom-24 -right-24 h-48 w-48 rounded-full bg-tint-violet opacity-70 blur-3xl"
+                      className="pointer-events-none absolute -bottom-28 -right-28 h-56 w-56 rounded-full bg-tint-violet opacity-50 blur-3xl"
                     />
-                    <span className="absolute -top-3 left-1/2 z-10 inline-flex -translate-x-1/2 items-center gap-1 rounded-full bg-foreground px-3 py-1 text-[11px] font-medium text-background">
+                    <span className="absolute -top-3 left-1/2 z-10 inline-flex -translate-x-1/2 items-center gap-1 rounded-full bg-foreground px-3 py-1 text-[11px] font-medium text-background shadow-premium">
                       <Sparkles className="h-3 w-3" />
                       Most popular
                     </span>
@@ -120,12 +120,12 @@ export function Pricing() {
                       {tier.name}
                     </h3>
                     {annual && tier.price > 0 && (
-                      <Badge variant="outline" className="text-[10px] font-medium">
+                      <Badge variant="outline" className="border-border/50 text-[10px] font-medium">
                         billed yearly
                       </Badge>
                     )}
                   </div>
-                  <p className="mt-1 min-h-[2.5rem] text-sm text-muted-foreground">
+                  <p className="mt-1.5 min-h-[2.5rem] text-[13px] text-muted-foreground">
                     {tier.description}
                   </p>
                   <div className="mt-6 flex items-baseline gap-1">
@@ -142,22 +142,22 @@ export function Pricing() {
                   </div>
                   <Button
                     asChild
-                    className={cn("mt-6 group")}
+                    className={cn("mt-6 group rounded-full")}
                     variant={tier.highlight ? "default" : "outline"}
                     size="lg"
                   >
                     <Link href="/sign-up">{tier.cta}</Link>
                   </Button>
-                  <ul className="mt-6 space-y-3 text-sm">
+                  <ul className="mt-7 space-y-3 text-[13px]">
                     {tier.features.map((f) => (
-                      <li key={f} className="flex items-start gap-2">
+                      <li key={f} className="flex items-start gap-2.5">
                         <Check
                           className={cn(
                             "mt-0.5 h-4 w-4 shrink-0",
-                            tier.highlight ? "text-indigo-500" : "text-foreground"
+                            tier.highlight ? "text-indigo-500" : "text-foreground/60"
                           )}
                         />
-                        <span>{f}</span>
+                        <span className="text-muted-foreground">{f}</span>
                       </li>
                     ))}
                   </ul>
