@@ -1,0 +1,8 @@
+{
+  "node_modules\\.pnpm\\@clerk+nextjs@7.3.3_next@14_5eeb3bf899fd61f949bcc529423130fb\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\ClerkProvider.js -> ./keyless-creator-reader.js": {
+    "id": "node_modules\\.pnpm\\@clerk+nextjs@7.3.3_next@14_5eeb3bf899fd61f949bcc529423130fb\\node_modules\\@clerk\\nextjs\\dist\\esm\\app-router\\client\\ClerkProvider.js -> ./keyless-creator-reader.js",
+    "files": [
+      "static/chunks/_app-pages-browser_node_modules_pnpm_clerk_nextjs_7_3_3_next_14_5eeb3bf899fd61f949bcc52942313-b460ed.js"
+    ]
+  }
+}
