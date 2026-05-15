@@ -40,4 +40,11 @@ yarn-error.log*
 !.vscode/settings.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.idea
+# Reference repos cloned for builder UX patterns (not for redistribution)
+resources/
+
+# Generated executable product runtimes
+generated-runtimes/
+
+# Windows reserved names
+nul
